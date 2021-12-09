@@ -1,0 +1,17 @@
+{
+  "name": "tandem",
+  "version": "1.0.0",
+  "description": "Bike e-commerce with own database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecommerce",
+    "js",
+    "react",
+    "cycling"
+  ],
+  "author": "Alfredo Morón Montiel",
+  "license": "ISC"
+}

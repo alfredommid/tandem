@@ -1,0 +1,36 @@
+//Users routes
+const express = require('express')
+const router = express.Router();
+const afiliadoController = require('../controllers/afiliadoController');
+const {check} = require('express-validator');
+const authAfiliado = require('../middleware/authAfiliado');
+const auth = require('../middleware/auth');
+
+
+//Create user /tandem/afiliados
+
+//Sign Up
+router.post('/', [
+    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+    check('correo', 'Agrega un correo válido').isEmail(),
+    check('password', 'El password debe de ser mínimo de 6 caracteres').isLength({min:6}),
+    check('telefono', 'El teléfono debe de ser 10 números').isLength({min:10}),
+    check('ciudad', 'La ciudad es obligatoria').not().isEmpty(),
+    check('colonia', 'La colonia es obligatoria').not().isEmpty(),
+    check('cp', 'El CP es obligatorio').isLength({min:5}),
+    check('calleNo', 'La calle y número son obligatorios').not().isEmpty()
+] ,afiliadoController.crearAfiliado);
+
+//Login
+router.post('/login', [
+    check('correo', 'Agrega un correo válido').isEmail(),
+    check('password', 'El password debe de ser mínimo de 6 caracteres').isLength({min:6})
+] , afiliadoController.authAfiliado);
+
+//Lista completa de Afiliados
+router.get('/', auth, afiliadoController.obtenerAfiliados);
+
+//Artículos asignados a Afiliado
+router.get('/perfil', authAfiliado, afiliadoController.obtenerArticulos);
+
+module.exports = router;
