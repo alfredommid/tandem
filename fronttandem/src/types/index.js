@@ -5,6 +5,7 @@ export const INICIO_LISTO = 'INICIO_LISTO';
 export const TIPO_LISTO = 'TIPO_LISTO';
 export const INFO_LISTO = 'INFO_LISTO';
 export const TALLER_LISTO = 'TALLER_LISTO';
+export const AFILIADOID = 'AFILIADOID';
 export const IMGS_LISTO = 'IMGS_LISTO';
 export const REGISTRAR_ARTICULO = 'REGISTRAR_ARTICULO';
 export const QUITAR_REGISTRO = 'QUITAR_REGISTRO';

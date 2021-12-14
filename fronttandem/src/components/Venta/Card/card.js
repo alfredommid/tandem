@@ -1,32 +1,34 @@
 import React, { useEffect, useContext, useState } from 'react';
 import ArticuloContext from '../../../context/articulos/articuloContext';
 import {Row, Col, Card, CardTitle, CardText, Button} from 'reactstrap';
+import CardContext from '../../../context/card/cardContext';
 
-const Dropdown = () => {
-    const [afiliado, setAfiliado] = useState({
-        afiliadoId:''
-    });
-    const{afiliadoId} = afiliado
+const AfiliadosCard = () => {
+    //const [afiliado, setAfiliado] = useState({ afiliadoId:'' });
+    //const{afiliadoId} = afiliado
+
     const articuloContext = useContext(ArticuloContext);
     const {afiliados, obtenerAfiliados} = articuloContext;
 
-    useEffect(() => {
-        obtenerAfiliados()
-    }, [])
+    const cardContext = useContext(CardContext);
+    const { idAfiliado, obtenerAfiliadoId } = cardContext;
 
-    const formChange2 = e => {
-        setAfiliado({
-            afiliadoId : e.target.id
-        })
+    const idObtenida = (e) => {
+        obtenerAfiliadoId(e.target.id)
+        console.log(idAfiliado)
     }
-    
+
+    // eslint-disable-next-line
+    useEffect(() => {obtenerAfiliados()}, [])
+
+    //const formChange2 = e => { setAfiliado({ afiliadoId : e.target.id }) }
 
     return ( 
         <section id="dropdown-section">
             <Row>
                 {afiliados
                     ?   afiliados.map( afiliado => 
-                        <Col name={afiliadoId} key={afiliado._id} sm="4">
+                        <Col key={afiliado._id} sm="4">
                             <Card body>
                                 <CardTitle tag="h5">
                                     {afiliado.nombre}
@@ -36,7 +38,7 @@ const Dropdown = () => {
                                     {afiliado.telefono}<br></br>
                                     {afiliado.calleNo}
                                 </CardText>
-                                <Button id={afiliado._id} onClick={formChange2}>
+                                <Button id={afiliado._id} onClick={idObtenida}>
                                     Elegir
                                 </Button>
                             </Card>
@@ -49,4 +51,4 @@ const Dropdown = () => {
      );
 }
  
-export default Dropdown;
+export default AfiliadosCard;

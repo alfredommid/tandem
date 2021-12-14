@@ -2,7 +2,9 @@ import React, { Fragment, useEffect, useState, useContext } from 'react';
 import LoggedHeader from './Layout/loggedHeader';
 import AuthContext from '../../context/auth/authContext';
 import ArticuloContext from '../../context/articulos/articuloContext';
+import CardContext from '../../context/card/cardContext';
 import AlertaContext from '../../context/alertas/alertaContext';
+import AfiliadosCard from './Card/card'
 
 
 const Venta = (props) => {
@@ -14,12 +16,14 @@ const Venta = (props) => {
     const {alerta, mostrarAlerta} = alertaContext;
 
     const articuloContext = useContext(ArticuloContext);
-    const { afiliados, inicio, tipo, info, taller, fin, registrado, principioFn, inicioFn, tipoFn, infoFn, tallerFn, obtenerAfiliados, registrarArticulo } = articuloContext;
+    const { inicio, tipo, info, taller, fin, registrado, principioFn, inicioFn, tipoFn, infoFn, tallerFn, registrarArticulo } = articuloContext;
     //TODO extraer del state para mostrar cada uno de los forms ( info, taller, imgs)
+
+    const cardContext = useContext(CardContext);
+    const {idAfiliado} = cardContext;
 
     useEffect(() => {
         usuarioAutenticado();
-        obtenerAfiliados();
     }, []);
 
     //TODO En lugar de hacer el .push a /tienda se tiene que quitar el true de publicado una vez que se publique y después ya hacer el .push a /tienda.
@@ -27,7 +31,13 @@ const Venta = (props) => {
         if(registrado){
             props.history.push('/tienda');
         }
-    }, [registrado, props.history])
+        if(idAfiliado){
+            setEntrada({
+                ...entrada,
+                afiliadoId: idAfiliado
+            })
+        }
+    }, [registrado, props.history, idAfiliado])
 
     const [entrada, setEntrada] =useState({
         tipoEntrada:'',
@@ -276,7 +286,7 @@ const Venta = (props) => {
                                         <label htmlFor="marca">Marca</label>
                                         <input
                                             type="text"
-                                            className="input-box"
+                                            className="input-box mx-5"
                                             id="marca"
                                             name="marca"
                                             placeholder="Trek"
@@ -289,7 +299,7 @@ const Venta = (props) => {
                                         <label htmlFor="year">Año</label>
                                         <input
                                             type="text"
-                                            className="input-box"
+                                            className="input-box mx-5"
                                             id="year"
                                             name="year"
                                             placeholder="ej. 2019"
@@ -304,7 +314,7 @@ const Venta = (props) => {
                                         <label htmlFor="modelo">Modelo</label>
                                         <input
                                             type="text"
-                                            className="input-box"
+                                            className="input-box mx-5"
                                             id="modelo"
                                             name="modelo"
                                             placeholder="Modelo"
@@ -317,7 +327,7 @@ const Venta = (props) => {
                                         <label htmlFor="talla">Talla</label>
                                         <input
                                             type="text"
-                                            className="input-box"
+                                            className="input-box mx-5"
                                             id="talla"
                                             name="talla"
                                             placeholder="Ej. 54 o M"
@@ -332,7 +342,7 @@ const Venta = (props) => {
                                         <label htmlFor="especificaciones">Color</label>
                                         <input
                                             type="text"
-                                            className="input-box"
+                                            className="input-box mx-5"
                                             id="color"
                                             name="color"
                                             placeholder="Color"
@@ -344,7 +354,7 @@ const Venta = (props) => {
                                     <div className="container info sec-form tipoBicicleta">
                                         <label htmlFor="tipoBicicleta">Tipo de Bicicleta</label>
                                         <select 
-                                            className="input-box"
+                                            className="input-box mx-5"
                                             id="tipoBicicleta"
                                             name="tipoBicicleta" 
                                             onChange={formChange} 
@@ -373,22 +383,23 @@ const Venta = (props) => {
                         ?   <main className="container principal-form">
                                 <div className="container title-form">
                                     <h2>¿Dónde quieres que evalúen tu bicicleta?</h2>
-                                </div>
-                                <div className="container sec-form afiliado">
+                                 </div>
+                                {/*<div className="container sec-form afiliado">
                                     <label htmlFor="afiliadoId">Taller de Evaluación</label>
                                     <select 
-                                        className="input-box"
+                                        className="input-box mx-5"
                                         id="afiliadoId"
                                         name="afiliadoId" 
                                         onChange={formChange} 
                                         value={afiliadoId}>
-                                        <option value="" defaultValue hidden>Seleccionar</option>
+                                        <option value="" defaultValue className="option-taller" hidden>Seleccionar</option>
                                         {afiliados
-                                            ?   afiliados.map( afiliado => <option key={afiliado._id} value={afiliado._id}>{afiliado.nombre}</option> )
+                                            ?   afiliados.map( afiliado => <option className="option-taller" key={afiliado._id} value={afiliado._id}>{afiliado.nombre}</option> )
                                             :   null
                                         }
                                     </select>
-                                </div>
+                                </div> */}
+                                <AfiliadosCard/>
                                 <div className="cont-buttons">
                                     <button className="btn btn-step" onClick={onClickTipo}>
                                         Atrás
@@ -397,6 +408,7 @@ const Venta = (props) => {
                                         Siguiente
                                     </button>
                                 </div>
+                                
                             </main>
                         :   null
                     }
