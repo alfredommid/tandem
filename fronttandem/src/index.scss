@@ -427,7 +427,7 @@ main{
 .loggedHead-cont{
   display: flex;
   height: 6.5em;
-  background-color: white;
+  background-color: var(--gris2);;
 
   .logo-cont{
     background-color: var(--background);
@@ -476,7 +476,7 @@ main{
   background-image: url("./media/imgs/cool-1.jpg");
   background-position: 100% 50%;
   background-repeat: no-repeat;
-  background-color: white;
+  background-color: var(--gris2);
   background-size: 17%;
   display: flex;
   flex-direction: row;
@@ -506,6 +506,7 @@ main{
         height: 5em;
         justify-content: start;
         align-items: center;
+        color: whitesmoke;
       }
       .cont-sec-form{
         width: 90%;
@@ -522,15 +523,29 @@ main{
         height: 10em;
         margin: 1em;
         label{
-          font-size: 1.4rem;
+          color: whitesmoke;
+          font-size: 1.6rem;
           font-weight: bold;
+          font-family: var(--textFont);
+          margin-bottom: 2em;
         }
-        
       }
       .info{
         border-radius: 0em;
         border: none;
+        .input-box{
+          font-size: 1.4em;
+          .opt-form{
+            font-size: 1.4em;
+            color: brown;
+          }
+          .opt-form:hover{
+            background-color: yellowgreen !important;
+            color: var(--gris2) !important;
+          }
+        }
       }
+
       .tipo{
         border-radius: .2em;
         padding: 0em;
@@ -570,6 +585,31 @@ main{
           border: .4em solid rgb(245, 187, 187);
         }
       }
+      .afiliado{
+        border-radius: 0em;
+        border: none;
+        .input-box{
+          margin: 0 auto;
+          color: var(--gris2);
+          background-color: var(--background);
+          width: 70%;
+          height: 50px;
+          font-size: 1.4em;
+          .option-taller{
+            background-color: tomato;
+            color: black;
+            width: 70%;
+            height: 50px;
+            cursor: pointer;
+            font-size: 1.4em;
+          }
+          .option-taller:hover{
+            width: 50%;
+            background-color: chocolate;
+            color: white;
+          }
+        }
+      }
       .uno{
         background-image: url('./media/imgs/venta-1.jpg');
         background-repeat: no-repeat;
@@ -579,9 +619,6 @@ main{
         background-image: url('./media/imgs/renta-1.jpg');
         background-repeat: no-repeat;
         border: none;
-      }
-      .contenido-tipo:hover{
-        transform: scale(250px, 250px);
       }
 
 
@@ -618,8 +655,8 @@ main{
   .cont-card{
     width: 15vw;
     height: auto;
-    border-radius: 0em 0em 6em 0em;
     padding-left: 0px;
+    background-color: var(--gris2);
     .cont-steps{
       background-color: var(--background);
       box-sizing: initial;
@@ -668,27 +705,68 @@ main{
   }
 }
 .input-box{
-  height: 3rem;
+  height: 5rem;
   width: 70%;
   margin-top: 1rem;
-  border: none;
+  border: .4em solid rgb(255, 83, 60);
+  border-top: none;
+  border-left: none;
+  border-right: none;
   display: flex;
-  border-radius: .5em;
-  background-color: #5CC285;
-
+  color: white;
+  background-color: var(--gris2);
+  text-align: center;
+  transition: .7s ease;
 }
 .input-box:focus{
+  background-color: rgba(235, 57, 110, 0.3);
   outline: none;
+  text-align: center;
+  font-size: 1.4em;
+  border-radius: .4em .4em .4em .4em;
 }
 .input-box::placeholder{
   color: var(--gris2);
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  text-align: center;
+  color: whitesmoke;
 }
-.input-box{
-  font-size: 1.3rem;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+//-----------------------------------------------------Option Select Dropdown --------------------------------------------------------------
+#dropdown-section {
+  display: block;
+  position: absolute;
+	width: 320px;
+  height: 55px;
+	left: 50%;
+  top: 50%;
+	margin-left: -160px;
+  margin-top: -87px;
+  select {
+    margin: 0 auto;
+	  color: #EC6F66;
+	  width: 310px;
+	  padding: 15px;
+	  height: 25px;
+	  cursor: pointer;
+    border: none;
+  }
+  select:hover {
+    background-color: transparent;
+	  color: white;
+	  padding: 15px 5px 15px 25px;
+    border: none ;
+  }
+  select option {
+    background-color: white;
+    color: gray;
+    width: 310px;
+    padding: 10px 15px;
+    height: 20px;
+    cursor: pointer;
+  }
+  select option:hover {
+    padding-left: 25px;
+    width: 270px;
+    color: #EC6F66;
+  }
 }

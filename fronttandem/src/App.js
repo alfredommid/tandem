@@ -5,6 +5,9 @@ import Login from './components/auth/login';
 import signUp from './components/auth/signUp'
 import Venta from './components/Venta/venta';
 import Tienda from './components/Tienda/Tienda';
+import Perfil from './components/Perfil/perfil';
+import Carrito from './components/Carrito/carrito';
+import Contacto from './components/Contacto/contacto';
 
 import ArticuloState from './context/articulos/articuloState';
 import AlertaState from './context/alertas/alertaState';
@@ -30,8 +33,9 @@ function App() {
               <Route exact path='/signup' component={signUp}/>
               <RutaPrivada exact path='/venta' component={Venta}/>
               <RutaPrivada exact path='/tienda' component={Tienda}/>
-              <RutaPrivada exact path='/perfil'/>
-              <RutaPrivada exact path='/carrito'/>
+              <RutaPrivada exact path='/perfil' component={Perfil}/>
+              <RutaPrivada exact path='/carrito' component={Carrito}/>
+              <RutaPrivada exact path='/contacto' component={Contacto}/>
             </Switch>
           </Router>
         </ArticuloState>
