@@ -22,7 +22,7 @@ const SignUp = (props) => {
         }
         if(mensaje){
             mostrarAlerta(mensaje.msg, mensaje.categoria);
-        }
+        }// eslint-disable-next-line
     }, [mensaje, autenticado, props.history])
 
     const [usuario, setUsuario] =useState({

@@ -20,7 +20,9 @@ exports.crearArticulo = async(req, res) => {
             talla: req.body.talla,
             color: req.body.color,
             tipoBicicleta: req.body.tipoBicicleta,
-            afiliadoId: req.body.afiliadoId
+            afiliadoId: req.body.afiliadoId,
+            hora: req.body.hora,
+            fecha: req.body.fecha
         });
         //Asignar el usuario con jwt
         articulo.usuarioId = req.usuario.id;

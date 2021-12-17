@@ -40,6 +40,16 @@ const ArticuloSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Afiliado'
     },
+    hora:{
+        type: String,
+        required: true,
+        trim: true
+    },
+    fecha:{
+        type: Date,
+        required: true,
+        trim: true
+    },
     usuarioId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Usuario'

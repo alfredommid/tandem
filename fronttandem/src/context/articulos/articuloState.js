@@ -3,7 +3,7 @@ import articuloReducer from './articuloReducer';
 import articuloContext from './articuloContext';
 import tokenAuth from '../../config/tokenAuth';
 import clienteAxios from '../../config/axios';
-import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, IMGS_LISTO, OBTENER_ARTICULOS_USUARIO, REGISTRAR_ARTICULO, QUITAR_REGISTRO } from '../../types'
+import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, CITA_LISTA, IMGS_LISTO, OBTENER_ARTICULOS_USUARIO, REGISTRAR_ARTICULO, QUITAR_REGISTRO } from '../../types'
 
 const ArticuloState = props => {
     const initialState = {
@@ -13,6 +13,7 @@ const ArticuloState = props => {
         tipo: false,
         info: false,
         taller: false,
+        cita: false,
         imgs: false,
         fin: false,
         registrado: false
@@ -37,36 +38,13 @@ const ArticuloState = props => {
         }
     }
 
-    const principioFn = () => {
-        dispatch({
-            type: PRINCIPIO
-        })
-    }
-    const inicioFn = () => {
-        dispatch({
-            type: INICIO_LISTO
-        })
-    }
-    const tipoFn = () => {
-        dispatch({
-            type: TIPO_LISTO
-        })
-    }
-    const infoFn = () => {
-        dispatch({
-            type: INFO_LISTO
-        })
-    }
-    const tallerFn = () => {
-        dispatch({
-            type: TALLER_LISTO
-        })
-    }
-    const imgsFn = () => {
-        dispatch({
-            type: IMGS_LISTO
-        })
-    }
+    const principioFn = () => { dispatch ( { type: PRINCIPIO } ) }
+    const inicioFn = () => { dispatch ( { type: INICIO_LISTO } ) }
+    const tipoFn = () => { dispatch ( { type: TIPO_LISTO } ) }
+    const infoFn = () => { dispatch ( { type: INFO_LISTO } ) }
+    const tallerFn = () => { dispatch ( { type: TALLER_LISTO } ) }
+    const citaFn = () => { dispatch ( { type: CITA_LISTA } ) }
+    const imgsFn = () => { dispatch ( { type: IMGS_LISTO } ) }
     const registrarArticulo = async datos => {
         const token = localStorage.getItem('token');
         if(token){
@@ -116,6 +94,7 @@ const ArticuloState = props => {
             tipo: state.tipo,
             info: state.info,
             taller: state.taller,
+            cita: state.cita,
             imgs: state.imgs,
             fin: state.fin,
             registrado: state.registrado,
@@ -124,6 +103,7 @@ const ArticuloState = props => {
             tipoFn,
             infoFn,
             tallerFn,
+            citaFn,
             imgsFn,
             obtenerAfiliados,
             registrarArticulo,

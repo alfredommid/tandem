@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext} from 'react';
 import ArticuloContext from '../../../context/articulos/articuloContext';
 import {Row, Col, Card, CardTitle, CardText, Button} from 'reactstrap';
 import CardContext from '../../../context/card/cardContext';
@@ -15,7 +15,6 @@ const AfiliadosCard = () => {
 
     const idObtenida = (e) => {
         obtenerAfiliadoId(e.target.id)
-        console.log(idAfiliado)
     }
 
     // eslint-disable-next-line
@@ -28,7 +27,7 @@ const AfiliadosCard = () => {
             <Row>
                 {afiliados
                     ?   afiliados.map( afiliado => 
-                        <Col key={afiliado._id} sm="4">
+                        <Col className="mb-4" name={idAfiliado} key={afiliado._id} sm="4">
                             <Card body>
                                 <CardTitle tag="h5">
                                     {afiliado.nombre}

@@ -4,7 +4,9 @@ import AuthContext from '../../context/auth/authContext';
 import ArticuloContext from '../../context/articulos/articuloContext';
 import CardContext from '../../context/card/cardContext';
 import AlertaContext from '../../context/alertas/alertaContext';
+import CitasContext from '../../context/citas/citasContext';
 import AfiliadosCard from './Card/card'
+import AdminCitas from './adminCitas/adminCitas';
 
 
 const Venta = (props) => {
@@ -13,42 +15,45 @@ const Venta = (props) => {
     const { usuario, usuarioAutenticado } = authContext;
 
     const alertaContext = useContext(AlertaContext);
-    const {alerta, mostrarAlerta} = alertaContext;
+    const { alerta, mostrarAlerta } = alertaContext;
 
     const articuloContext = useContext(ArticuloContext);
-    const { inicio, tipo, info, taller, fin, registrado, principioFn, inicioFn, tipoFn, infoFn, tallerFn, registrarArticulo } = articuloContext;
+    const { inicio, tipo, info, taller, cita, fin, registrado, principioFn, inicioFn, tipoFn, infoFn, tallerFn, citaFn, registrarArticulo } = articuloContext;
     //TODO extraer del state para mostrar cada uno de los forms ( info, taller, imgs)
 
     const cardContext = useContext(CardContext);
-    const {idAfiliado} = cardContext;
+    const { idAfiliado } = cardContext;
 
-    useEffect(() => {
-        usuarioAutenticado();
-    }, []);
+    const citasContext = useContext(CitasContext);
+    const { fechaCita, horaCita } = citasContext;
+
+    const [entrada, setEntrada] =useState({
+            tipoEntrada:'',
+            marca:'',
+            year:'',
+            modelo:'',
+            talla:'',
+            color:'',
+            tipoBicicleta:'',
+            afiliadoId:'',
+            fecha:'',
+            hora:''
+        });
+
+    // eslint-disable-next-line
+    useEffect(() => {usuarioAutenticado()}, []);
 
     //TODO En lugar de hacer el .push a /tienda se tiene que quitar el true de publicado una vez que se publique y después ya hacer el .push a /tienda.
     useEffect(() => {
-        if(registrado){
-            props.history.push('/tienda');
-        }
-        if(idAfiliado){
-            setEntrada({
-                ...entrada,
-                afiliadoId: idAfiliado
-            })
-        }
-    }, [registrado, props.history, idAfiliado])
+        if ( registrado ) { props.history.push ( '/tienda' ); }
+        if ( idAfiliado ) { setEntrada ( { ...entrada, afiliadoId: idAfiliado } ) }
+        if ( fechaCita ) { setEntrada ( { ...entrada,  fecha: fechaCita } ) }
+        // eslint-disable-next-line
+    }, [registrado, props.history, idAfiliado, fechaCita, horaCita])
 
-    const [entrada, setEntrada] =useState({
-        tipoEntrada:'',
-        marca:'',
-        year:'',
-        modelo:'',
-        talla:'',
-        color:'',
-        tipoBicicleta:'',
-        afiliadoId:''
-    });
+    useEffect(() => {
+        if ( horaCita !== '' ) { setEntrada ( { ...entrada,  hora: horaCita } ) } else { setEntrada ( { ...entrada, hora: '' } ) }
+    }, [horaCita]);
 
     const [isChecked, setIsChecked] = useState([
         false,
@@ -76,7 +81,7 @@ const Venta = (props) => {
         }
     }, [images])*/
 
-    const {tipoEntrada, marca, year, modelo, talla, color, tipoBicicleta, afiliadoId} = entrada;
+    const {tipoEntrada, marca, year, modelo, talla, color, tipoBicicleta, afiliadoId, fecha, hora} = entrada;
     
 
     const formChange = e => {
@@ -98,11 +103,10 @@ const Venta = (props) => {
     };
 
     const onClickInicio = e => { e.preventDefault(); inicioFn(); }
-    const onClickInfo = e => { e.preventDefault();
-        if (marca.trim() === '' || year.trim() === '' || modelo.trim() === '' || talla.trim() === '' || color.trim() === ''){
-            mostrarAlerta('Todos los campos son obligatorios', 'alerta-error'); return;} infoFn(); }
+    const onClickInfo = e => { e.preventDefault(); if (marca.trim() === '' || year.trim() === '' || modelo.trim() === '' || talla.trim() === '' || color.trim() === ''){ mostrarAlerta('Todos los campos son obligatorios', 'alerta-error'); return;} infoFn(); }
     const onClickTipo = e => { e.preventDefault();if (tipoEntrada.trim() === ''){ mostrarAlerta('Todos los campos son obligatorios', 'alerta-error'); return;} tipoFn(); }
-    const onClickTaller= e => { e.preventDefault();if (afiliadoId.trim() === ''){ mostrarAlerta('Todos los campos son obligatorios', 'alerta-error'); return;} tallerFn(); }
+    const onClickTaller = e => { e.preventDefault();if (afiliadoId.trim() === ''){ mostrarAlerta('Todos los campos son obligatorios', 'alerta-error'); return;} tallerFn(); }
+    const onClickCita = e => { e.preventDefault(); if (fecha.trim() === '' || hora.trim() === ''){ mostrarAlerta('Todos los campos son obligatorios', 'alerta-error'); return;} citaFn()}
 
     /*const imageChange= e => {
         const img = e.target.files[0];
@@ -125,7 +129,9 @@ const Venta = (props) => {
             talla,
             color,
             tipoBicicleta,
-            afiliadoId
+            afiliadoId,
+            fecha,
+            hora
         })
     }
 
@@ -139,6 +145,7 @@ const Venta = (props) => {
                                 <p className="step step-off d-flex justify-content-start">¿Venta o Renta?</p>
                                 <p className="step step-off d-flex justify-content-start">Información Básica</p>
                                 <p className="step step-off d-flex justify-content-start">Taller Afiliado</p>
+                                <p className="step step-off d-flex justify-content-start">Crea tu Cita</p>
                                 <p className="step step-off d-flex justify-content-start">Imágenes</p>
                             </div>
                         :   null
@@ -151,6 +158,7 @@ const Venta = (props) => {
                                 }
                                 <p className="step d-flex justify-content-start">Información Básica</p>
                                 <p className="step d-flex justify-content-start">Taller Afiliado</p>
+                                <p className="step d-flex justify-content-start">Crea tu Cita</p>
                                 <p className="step d-flex justify-content-start">Imágenes</p>
                             </div>
                         :   null
@@ -163,6 +171,7 @@ const Venta = (props) => {
                                     :   <p className="step step-on d-flex justify-content-start">Información Básica</p>
                                 }
                                 <p className="step d-flex justify-content-start">Taller Afiliado</p>
+                                <p className="step d-flex justify-content-start">Crea tu Cita</p>
                                 <p className="step d-flex justify-content-start">Imágenes</p>
                             </div>
                         :   null
@@ -175,7 +184,21 @@ const Venta = (props) => {
                                     ?   <p className="step step-on d-flex justify-content-start">&#10004; Taller Afiliado</p>
                                     :   <p className="step step-on d-flex justify-content-start">Taller Afiliado</p>
                                 }
-                                <p className="step step d-flex justify-content-start">Imágenes</p>
+                                <p className="step d-flex justify-content-start">Crea tu Cita</p>
+                                <p className="step d-flex justify-content-start">Imágenes</p>
+                            </div>
+                        :   null
+                    }
+                    {cita
+                        ?   <div className="cont-steps">
+                                <p className="step step-on d-flex justify-content-start">&#10004; ¿Venta o Renta?</p>
+                                <p className="step step-on d-flex justify-content-start">&#10004; Información Básica</p>
+                                <p className="step step-on d-flex justify-content-start">&#10004; Taller Afiliado</p>
+                                {hora === '' || fecha === ''
+                                    ?   <p className="step step-on d-flex justify-content-start">Crea tu Cita</p>
+                                    :   <p className="step step-on d-flex justify-content-start">&#10004; Crea tu Cita</p>
+                                }
+                                <p className="step d-flex justify-content-start">Imágenes</p>
                             </div>
                         :   null
                     }
@@ -184,6 +207,7 @@ const Venta = (props) => {
                         <p className="step step-on d-flex justify-content-start">&#10004; ¿Venta o Renta?</p>
                         <p className="step step-on d-flex justify-content-start">&#10004; Información Básica</p>
                         <p className="step step-on d-flex justify-content-start">&#10004; Taller Afiliado</p>
+                        <p className="step step-on d-flex justify-content-start">&#10004; Crea tu Cita</p>
                         <p className="step step-on d-flex justify-content-start">&#10004; Imágenes</p>
                     </div>
                         :   null
@@ -195,37 +219,37 @@ const Venta = (props) => {
                 <form 
                     className="container form-cont"
                     onSubmit={formSubmit}>
-                        {alerta ? <div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div> : null}
+                    {alerta ? <div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div> : null}
                     {inicio
-                    ?   <main className="container principal-form">
-                            <div className="container sec-form inicio">
-                                {usuario
-                                    ?   <p className="intro-text">
-                                            Hola <span className="nombre-usuario">{usuario.nombre}</span>, gracias por confiar en Tandem<br></br> 
-                                            para vender o rentar tu bicicleta.</p>
-                                        
-                                    :   <p className="intro-text">
-                                            Hola, gracias por confiar en Tandem<br></br> para vender o Rentar tu bicicleta.<br></br></p>
-                                }
-                                <p className="intro-text">
-                                            Nuestra misión es ofrecer bicicletas<br></br> totalmente evaluadas y a un precio justo,<br></br>
-                                            tanto para el vendedor como para el comprador.<br></br></p>
-                                <p className="intro-text">
-                                    Por lo que va a ser necesario que lleves tu bicicleta<br></br>
-                                    a evaluar a una de las tiendas de nuestros afiliados.<br></br></p>
-                                <p className="intro-text">
-                                    Una vez evaluada tu bicicleta, nuestro afiliado<br></br> 
-                                    le asignará un precio y una calificación<br></br> dependiendo del estado general.<br></br></p>
-                                <p className="intro-text">
-                                    ¡Muchas gracias por confiar en<br></br>
-                                    Tandem!
-                                </p>
-                            </div>
-                            <button className="btn intro btn-step" onClick={onClickInicio}>
-                                    Empezar
-                            </button>
-                        </main>
-                    :   null
+                        ?   <main className="container principal-form">
+                                <div className="container sec-form inicio">
+                                    {usuario
+                                        ?   <p className="intro-text">
+                                                Hola <span className="nombre-usuario">{usuario.nombre}</span>, gracias por confiar en Tandem<br></br> 
+                                                para vender o rentar tu bicicleta.</p>
+                                                
+                                        :   <p className="intro-text">
+                                                Hola, gracias por confiar en Tandem<br></br> para vender o Rentar tu bicicleta.<br></br></p>
+                                    }
+                                    <p className="intro-text">
+                                        Nuestra misión es ofrecer bicicletas<br></br> totalmente evaluadas y a un precio justo,<br></br>
+                                        tanto para el vendedor como para el comprador.<br></br></p>
+                                    <p className="intro-text">
+                                        Por lo que va a ser necesario que lleves tu bicicleta<br></br>
+                                        a evaluar a una de las tiendas de nuestros afiliados.<br></br></p>
+                                    <p className="intro-text">
+                                        Una vez evaluada tu bicicleta, nuestro afiliado<br></br> 
+                                        le asignará un precio y una calificación<br></br> dependiendo del estado general.<br></br></p>
+                                    <p className="intro-text">
+                                        ¡Muchas gracias por confiar en<br></br>
+                                        Tandem!
+                                    </p>
+                                </div>
+                                <button className="btn intro btn-step" onClick={onClickInicio}>
+                                        Empezar
+                                </button>
+                            </main>
+                        :   null
                     }
                     {tipo 
                         ?   <main className="container principal-form cont-tipo">
@@ -399,7 +423,9 @@ const Venta = (props) => {
                                         }
                                     </select>
                                 </div> */}
-                                <AfiliadosCard/>
+                                <div className="container sec-form afiliado">
+                                    <AfiliadosCard/>
+                                </div>
                                 <div className="cont-buttons">
                                     <button className="btn btn-step" onClick={onClickTipo}>
                                         Atrás
@@ -408,7 +434,25 @@ const Venta = (props) => {
                                         Siguiente
                                     </button>
                                 </div>
-                                
+                            </main>
+                        :   null
+                    }
+                    {cita
+                        ?   <main className="container principal-form">
+                                <div className="container cita-form">
+                                    <h2>Crea tu cita</h2>
+                                </div>
+                                <div className="container cita-cont">
+                                    <AdminCitas affiliateId={afiliadoId}/>
+                                </div>
+                                <div className="cont-buttons">
+                                    <button className="btn btn-step" onClick={onClickInfo}>
+                                        Atrás
+                                    </button>
+                                    <button className="btn btn-step" onClick={onClickCita}>
+                                        Siguiente
+                                    </button>
+                                </div>
                             </main>
                         :   null
                     }
@@ -418,7 +462,7 @@ const Venta = (props) => {
                                     <h2 className="text-center">¿Está lista tu publicación?</h2>
                                 </div>
                                 <div className="cont-buttons">
-                                    <button className="btn btn-step" onClick={onClickInfo}>Atrás</button>
+                                    <button className="btn btn-step" onClick={onClickTaller}>Atrás</button>
                                     <input type="submit" className="btn btn-step" value="¡Listo!"/>
                                 </div>
                             </main>

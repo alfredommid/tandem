@@ -33,4 +33,7 @@ router.get('/', auth, afiliadoController.obtenerAfiliados);
 //Artículos asignados a Afiliado
 router.get('/perfil', authAfiliado, afiliadoController.obtenerArticulos);
 
+//Afiliado por Id
+router.get('/:id', auth, afiliadoController.obtenerAfiliadoId);
+
 module.exports = router;

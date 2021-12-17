@@ -118,3 +118,14 @@ exports.obtenerArticulos = async(req, res) => {
         res.status(500).json({msg: 'Hubo un error'});
     }
 }
+
+//Obtener artículo por Id
+exports.obtenerAfiliadoId = async(req,res) => {
+    try {
+        const afiliado = await Afiliado.findById(req.params.id).select('-password')
+        res.json({afiliado})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg: 'Hubo un error'});
+    }
+}

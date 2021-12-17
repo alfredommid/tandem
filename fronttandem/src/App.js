@@ -13,6 +13,7 @@ import ArticuloState from './context/articulos/articuloState';
 import AlertaState from './context/alertas/alertaState';
 import AuthState from './context/auth/authState';
 import AfiliadoState from './context/card/cardState';
+import CitasState from './context/citas/citasState';
 import tokenAuth from './config/tokenAuth';
 import RutaPrivada from './components/routes/rutaPrivada';
 
@@ -28,18 +29,20 @@ function App() {
       <AuthState>
         <ArticuloState>
           <AfiliadoState>
-            <Router>
-              <Switch>
-                <Route exact path='/' component={frontView}/>
-                <Route exact path='/login' component={Login}/>
-                <Route exact path='/signup' component={signUp}/>
-                <RutaPrivada exact path='/venta' component={Venta}/>
-                <RutaPrivada exact path='/tienda' component={Tienda}/>
-                <RutaPrivada exact path='/perfil' component={Perfil}/>
-                <RutaPrivada exact path='/carrito' component={Carrito}/>
-                <RutaPrivada exact path='/contacto' component={Contacto}/>
-              </Switch>
-            </Router>
+            <CitasState>
+              <Router>
+                <Switch>
+                  <Route exact path='/' component={frontView}/>
+                  <Route exact path='/login' component={Login}/>
+                  <Route exact path='/signup' component={signUp}/>
+                  <RutaPrivada exact path='/venta' component={Venta}/>
+                  <RutaPrivada exact path='/tienda' component={Tienda}/>
+                  <RutaPrivada exact path='/perfil' component={Perfil}/>
+                  <RutaPrivada exact path='/carrito' component={Carrito}/>
+                  <RutaPrivada exact path='/contacto' component={Contacto}/>
+                </Switch>
+              </Router>
+            </CitasState>
           </AfiliadoState>
         </ArticuloState>
       </AuthState>

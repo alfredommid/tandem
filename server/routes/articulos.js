@@ -16,6 +16,8 @@ router.post('/', auth,
     check('color', 'El campo color es obligatorio').not().isEmpty(),
     check('tipoBicicleta', 'El campo tipoBicicleta es obligatorio').not().isEmpty(),
     check('afiliadoId', 'El campo afiliado es obligatorio').not().isEmpty(),
+    check('hora', 'El campo hora es obligatorio').not().isEmpty(),
+    check('fecha', 'El campo fecha es obligatorio').not().isEmpty(),
 ], articuloController.crearArticulo);
 
 //Obtener todos los artículos por usuario
@@ -34,6 +36,9 @@ router.put('/:id', auth,
     check('talla', 'El campo talla es obligatorio').not().isEmpty(),
     check('color', 'El campo color es obligatorio').not().isEmpty(),
     check('tipoBicicleta', 'El campo tipoBicicleta es obligatorio').not().isEmpty(),
+    check('afiliadoId', 'El campo afiliado es obligatorio').not().isEmpty(),
+    check('hora', 'El campo hora es obligatorio').not().isEmpty(),
+    check('fecha', 'El campo fecha es obligatorio').not().isEmpty(),
 ], articuloController.actualizarArticulo);
 
 //Eliminar artículo

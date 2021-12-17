@@ -6,7 +6,11 @@ export const TIPO_LISTO = 'TIPO_LISTO';
 export const INFO_LISTO = 'INFO_LISTO';
 export const TALLER_LISTO = 'TALLER_LISTO';
 export const AFILIADOID = 'AFILIADOID';
+export const CITA_LISTA = 'CITA_LISTA';
 export const IMGS_LISTO = 'IMGS_LISTO';
+export const OBTENER_AFILIADOID = 'OBTENER_AFILIADOID';
+export const ASIGNAR_HORA = 'ASIGNAR_HORA';
+export const ASIGNAR_FECHA = 'ASIGNAR_FECHA';
 export const REGISTRAR_ARTICULO = 'REGISTRAR_ARTICULO';
 export const QUITAR_REGISTRO = 'QUITAR_REGISTRO';
 

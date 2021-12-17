@@ -6,9 +6,8 @@ const SideBar = () => {
     const authContext = useContext(AuthContext);
     const { usuario, usuarioAutenticado, cerrarSesion } = authContext;
 
-    useEffect(() => {
-        usuarioAutenticado();
-    }, [])
+    // eslint-disable-next-line
+    useEffect(() => {usuarioAutenticado()}, [])
 
     return ( 
         <aside className="sideBar">

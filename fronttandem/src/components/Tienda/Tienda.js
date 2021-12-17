@@ -11,9 +11,9 @@ const Tienda = () => {
     const authContext = useContext(AuthContext);
     const { usuarioAutenticado } = authContext
 
-    useEffect(() => {
-        usuarioAutenticado();
-    }, [])
+    // eslint-disable-next-line
+    useEffect(() => {usuarioAutenticado()}, [])
+    
     return ( 
         <Fragment>
             <LoggedHeader/>

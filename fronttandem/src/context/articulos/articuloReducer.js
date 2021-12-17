@@ -1,4 +1,4 @@
-import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, IMGS_LISTO, OBTENER_ARTICULOS_USUARIO, REGISTRAR_ARTICULO, QUITAR_REGISTRO } from '../../types'
+import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, CITA_LISTA, IMGS_LISTO, OBTENER_ARTICULOS_USUARIO, REGISTRAR_ARTICULO, QUITAR_REGISTRO } from '../../types'
 /*OBTENER_ESPECIFICO, VALIDAR_FORMULARIO, ARTICULO_ACTUAL, ELIMINAR_ARTICULO,*/
 
 // eslint-disable-next-line
@@ -16,6 +16,7 @@ export default (state, action) => {
                 tipo:false,
                 info:false,
                 taller:false,
+                cita:false,
                 imgs:false,
                 fin:false
             }
@@ -41,6 +42,7 @@ export default (state, action) => {
                 tipo:false,
                 info:false,
                 taller:true,
+                cita:false,
                 fin:false
             }
         case TALLER_LISTO:
@@ -51,9 +53,22 @@ export default (state, action) => {
                 tipo:false,
                 info:false,
                 taller:false,
+                cita:true,
                 imgs:false,
-                fin: true
+                fin: false
             }
+            case CITA_LISTA:
+                //TODO quitar el false de imgs y quitar todo el state de fin
+                return {
+                    ...state,
+                    inicio:false,
+                    tipo:false,
+                    info:false,
+                    taller:false,
+                    cita:false,
+                    imgs:false,
+                    fin: true
+                }
         case IMGS_LISTO:
             return {
                 ...state,
