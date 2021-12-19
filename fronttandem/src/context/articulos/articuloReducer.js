@@ -1,4 +1,4 @@
-import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, CITA_LISTA, IMGS_LISTO, OBTENER_ARTICULOS_USUARIO, REGISTRAR_ARTICULO, QUITAR_REGISTRO } from '../../types'
+import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, CITA_LISTA, IMGS_LISTO, OBTENER_ARTICULOS_USUARIO, REGISTRAR_ARTICULO, QUITAR_REGISTRO, ELIMINAR_ARTICULO, OBTENER_ARTICULOID } from '../../types'
 /*OBTENER_ESPECIFICO, VALIDAR_FORMULARIO, ARTICULO_ACTUAL, ELIMINAR_ARTICULO,*/
 
 // eslint-disable-next-line
@@ -57,18 +57,18 @@ export default (state, action) => {
                 imgs:false,
                 fin: false
             }
-            case CITA_LISTA:
+        case CITA_LISTA:
                 //TODO quitar el false de imgs y quitar todo el state de fin
-                return {
-                    ...state,
-                    inicio:false,
-                    tipo:false,
-                    info:false,
-                    taller:false,
-                    cita:false,
-                    imgs:false,
-                    fin: true
-                }
+            return {
+                ...state,
+                inicio:false,
+                tipo:false,
+                info:false,
+                taller:false,
+                cita:false,
+                imgs:false,
+                fin: true
+            }
         case IMGS_LISTO:
             return {
                 ...state,
@@ -83,6 +83,11 @@ export default (state, action) => {
             return {
                 ...state,
                 articulos: action.payload
+            }
+        case OBTENER_ARTICULOID:
+            return {
+                ...state,
+                articulo:action.payload
             }
         case REGISTRAR_ARTICULO:
             return{
@@ -100,7 +105,11 @@ export default (state, action) => {
                 fin:false,
                 registrado: null
             }
-    
+        case ELIMINAR_ARTICULO:
+            return{
+                ...state,
+                
+            }
         default:
             return state;
     }

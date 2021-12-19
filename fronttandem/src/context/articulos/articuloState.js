@@ -3,7 +3,7 @@ import articuloReducer from './articuloReducer';
 import articuloContext from './articuloContext';
 import tokenAuth from '../../config/tokenAuth';
 import clienteAxios from '../../config/axios';
-import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, CITA_LISTA, IMGS_LISTO, OBTENER_ARTICULOS_USUARIO, REGISTRAR_ARTICULO, QUITAR_REGISTRO } from '../../types'
+import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, CITA_LISTA, IMGS_LISTO, OBTENER_ARTICULOS_USUARIO, OBTENER_ARTICULOID, REGISTRAR_ARTICULO, QUITAR_REGISTRO, ELIMINAR_ARTICULO } from '../../types'
 
 const ArticuloState = props => {
     const initialState = {
@@ -81,7 +81,41 @@ const ArticuloState = props => {
                 payload: respuesta.data
             })
         } catch (error) {
-            
+            console.log(error.response);
+        }
+    }
+
+    const obtenerArticuloId = async (articuloId) => {
+        const token = localStorage.get('token');
+        if(token){
+            // Fn enviar token por headers
+            tokenAuth(token);
+        }
+        try {
+            const respuesta = await clienteAxios.get(`/tandem/articulos/${articuloId}`);
+            dispatch({
+                type: OBTENER_ARTICULOID,
+                payload: respuesta.data
+            })
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+
+    const eliminarArticuloId = async (articuloId) => {
+        const token = localStorage.get('token');
+        if(token){
+            // Fn enviar token por headers
+            tokenAuth(token);
+        }
+        try {
+            const respuesta = await clienteAxios.delete(`/tandem/articulos/${articuloId}`);
+            dispatch({
+                type: ELIMINAR_ARTICULO,
+                payload: respuesta
+            });
+        } catch (error) {
+            console.log(error.response);
         }
     }
 
@@ -107,7 +141,9 @@ const ArticuloState = props => {
             imgsFn,
             obtenerAfiliados,
             registrarArticulo,
-            obtenerArticulosUsuario
+            obtenerArticulosUsuario,
+            obtenerArticuloId,
+            eliminarArticuloId
         }}>
             {props.children}
         </articuloContext.Provider>
