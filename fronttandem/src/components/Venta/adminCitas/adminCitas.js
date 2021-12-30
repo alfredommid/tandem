@@ -33,10 +33,8 @@ const AdminCitas = (data) => {
     }
 
     fechaRegex(value.toLocaleDateString())
-
-    useEffect(() => {
-         definirFecha(fechaRegex(value.toLocaleDateString()))
-    }, [value]);
+    // eslint-disable-next-line
+    useEffect(() => {definirFecha(fechaRegex(value.toLocaleDateString()))}, [value]);
 
     const handleClick = e => {
         const target = e.target;

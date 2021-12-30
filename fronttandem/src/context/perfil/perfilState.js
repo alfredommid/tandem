@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, { useReducer } from 'react';
 import perfilReducer from './perfilReducer';
 import perfilContext from './perfilContext';
 import { DASHBOARD, PERFIL_ARTICULO, PERFIL_EDITAR, PERFIL_CONFIRMAR_ELIMINAR, PERFIL_ELIMINARART } from '../../types'
@@ -6,12 +6,17 @@ import { DASHBOARD, PERFIL_ARTICULO, PERFIL_EDITAR, PERFIL_CONFIRMAR_ELIMINAR, P
 
 const PerfilState = (props) => {
     const initialState = {
-        dashborad: true,
+        dashboard: true,
         articulo: false,
         editarArt: false,
         eliminarArt: false,
         confEliminar: false,
-        eliminado: false
+        eliminado: false,
+        editarInfo: false,
+        notificaciones:false,
+        items: false,
+        citas: false,
+        msj: false
     }
 
     const [state, dispatch] = useReducer(perfilReducer, initialState);
@@ -22,22 +27,25 @@ const PerfilState = (props) => {
     const confirmEliminar = () => {dispatch ({ type: PERFIL_CONFIRMAR_ELIMINAR})}
     const eliminar = () => {dispatch ({ type: PERFIL_ELIMINARART})}
     return ( 
-        <perfilContext.children
-            value={{
-                dashboard: state.dashborad,
+        <perfilContext.Provider value={{
+                dashboard: state.dashboard,
                 articulo: state.articulo,
-                articuloId: state.articuloId,
                 editarArt: state.editarArt,
                 eliminarArt: state.eliminarArt,
+                confEliminar: state.confEliminar,
+                eliminado: state.eliminado,
+                notificaciones: state.notificaciones,
+                items: state.items,
+                citas: state.citas,
+                msj: state.msj,
                 mainDashboard,
                 mainArticulo,
                 editArticulo,
                 confirmEliminar,
                 eliminar
-            }}
-            >
+            }}>
             {props.children}
-        </perfilContext.children>
+        </perfilContext.Provider>
      );
 }
  

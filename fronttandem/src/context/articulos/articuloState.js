@@ -16,7 +16,9 @@ const ArticuloState = props => {
         cita: false,
         imgs: false,
         fin: false,
-        registrado: false
+        registrado: false,
+        articulos: '',
+        articulo: ''
     }
 
     const [state, dispatch] = useReducer(articuloReducer, initialState);
@@ -132,6 +134,8 @@ const ArticuloState = props => {
             imgs: state.imgs,
             fin: state.fin,
             registrado: state.registrado,
+            articulos: state.articulos,
+            articulo: state.articulo,
             principioFn,
             inicioFn,
             tipoFn,

@@ -53,6 +53,7 @@ const Venta = (props) => {
 
     useEffect(() => {
         if ( horaCita !== '' ) { setEntrada ( { ...entrada,  hora: horaCita } ) } else { setEntrada ( { ...entrada, hora: '' } ) }
+        // eslint-disable-next-line
     }, [horaCita]);
 
     const [isChecked, setIsChecked] = useState([
