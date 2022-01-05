@@ -24,7 +24,7 @@ const CitasState = (props) => {
             const respuesta = await clienteAxios.get(`/tandem/afiliados/${id}`);
                 dispatch({
                     type: OBTENER_AFILIADOID,
-                    payload: respuesta.data.afiliado
+                    payload: respuesta.data
                 });
         } catch (error) {
             console.log(error.response);

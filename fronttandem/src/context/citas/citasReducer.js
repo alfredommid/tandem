@@ -6,7 +6,7 @@ export default (state, action) => {
         case OBTENER_AFILIADOID:
             return {
                 ...state,
-                afiliadoInfo:action.payload
+                afiliadoInfo:action.payload.afiliado
             }
         case ASIGNAR_FECHA:
             return{

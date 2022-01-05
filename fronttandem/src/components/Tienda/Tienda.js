@@ -4,7 +4,6 @@ import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button
   } from 'reactstrap';
-import SideBar from '../landpage/layout/SideBar';
 import AuthContext from '../../context/auth/authContext';
 
 const Tienda = () => {
@@ -17,7 +16,6 @@ const Tienda = () => {
     return ( 
         <Fragment>
             <LoggedHeader/>
-            <SideBar/>
             <div className="container row">
                 <Card className="col-8">
                     <CardImg top width="100%" src="#" alt="Card image cap" />

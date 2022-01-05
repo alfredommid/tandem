@@ -11,6 +11,7 @@
   --salmon: #FF6A5D;
   --headingFont:'Bungee Shade', cursive;
   --textFont:  'Prata', serif;
+  --dashFont: 'Questrial', sans-serif;
 }
 html {
   box-sizing: border-box;
@@ -826,7 +827,57 @@ main{
     }
   }
   .info-perfil{
-    background-color: yellowgreen;
     width: 90vw;
+    .perfil-dashboard{
+      height: 100%;
+      width: 100%;
+      padding: 1em;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr 1fr;
+      .dashboard{
+        font-family: var(--dashFont);
+        width: 100%;
+        padding: 1em;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+        border-radius: .7em;
+        .dashboard-title{
+          font-size: 3em;
+        }
+        .dashboard-texto{
+          font-size: 1.6em;
+        }
+      }
+      .dash-info{
+        background-color: #32D95C;
+        grid-row: 1 / 3;
+        grid-column: 1 / 3;
+      }
+      .dash-items{
+        background-color: #F5DBE1;
+        grid-row: 1 / 4;
+        grid-column: 4 / 6;
+      }
+      .dash-citas{
+        background-color: #894FDA;
+        grid-row: 3 / 5;
+        grid-column: 1 / 4;
+        color: white;
+        .text-map{
+          margin-right: 1em;
+        }
+      }
+      .dash-msjs{
+        background-color: #F6572E;
+        grid-row: 2 / 3;
+        grid-column: 3 / 4;
+      }
+      .dash-favs{
+        background-color: #ED2754;
+        grid-row: 1 / 2;
+        grid-column: 3 / 4;
+      }
+    }
   }
 }
