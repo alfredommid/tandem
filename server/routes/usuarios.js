@@ -10,7 +10,8 @@ router.post('/', [
     check('nombre', 'El nombre es obligaotio').not().isEmpty(),
     check('apellido', 'Apellido Obligatorio').not().isEmpty(),
     check('correo', 'Agrega un correo válido').isEmail(),
-    check('password', 'El password debe de ser mínimo de 6 caracteres').isLength({min:6})
+    check('password', 'El password debe de ser mínimo de 6 caracteres').isLength({min:6}),
+    check('telefono', 'El telefono debe de ser de 10 dígitos').isLength({min:10, max:10})
 ] ,usuarioController.crearUsuario);
 
 module.exports = router;

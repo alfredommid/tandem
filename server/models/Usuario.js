@@ -17,6 +17,12 @@ const UsuarioSchema = mongoose.Schema({
         trim: true,
         unique: true
     },
+    telefono:{
+        type: String,
+        required: true,
+        trim: true,
+        unique: true
+    },
     password:{
         type: String,
         required: true,
