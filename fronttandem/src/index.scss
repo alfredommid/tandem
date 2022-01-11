@@ -903,6 +903,88 @@ main{
       }
     }
   }
+  .articard-cont{
+    display: flex;
+    .cont-card{
+      height: 100%;
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 0px;
+      border: 2px solid black;
+      .cont-cardbody{
+        cursor: pointer;
+        padding: 0px;
+        margin: 0;
+        height: 40vh;
+        width: 90%;
+        padding-top: 5em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .cont-color{
+          height: 70%;
+          width: 90%;
+          background-color: #FF6A5D;
+          .cont-img{
+            height: 120%;
+            width: 90%;
+            background-color: #ED2754;
+            transform: translateY(-22%);
+
+          }
+        }
+        .cont-info{
+          width: 90%;
+          height: 30%;
+          border: 2px solid black;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .title-sub{
+            padding-top: .5em;
+            height: 50%;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            .text-1{
+              font-size: 1.6em;
+              font-weight: bold;
+            }
+            .text-2{
+              font-size: 1.4em;
+            }
+          }
+          .specs{
+            height: 50%;
+            display: flex;
+            justify-content: space-around;
+            .text-3{
+              font-size: 1.2em;
+            }
+            .estatus{
+              font-weight: bolder;
+            }
+          }
+        }
+      }
+      .cont-cardfooter{
+        background-color: white;
+        border: none;
+        width: 100%;
+        height: 8vh;
+        display: flex;
+        align-items: center;
+        .footer-text{
+          width: 90%;
+          font-size: 2.2em;
+          padding-left: .4em;
+        }
+      }
+    }
+
+  }
 }
 //----------------------------------------------------- Tienda --------------------------------------------------------------
 .main-tienda{

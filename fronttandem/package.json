@@ -1,6 +1,5 @@
 {
   "name": "fronttandem",
-  "homepage": "https://alfredommid.github.io/tandem/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
