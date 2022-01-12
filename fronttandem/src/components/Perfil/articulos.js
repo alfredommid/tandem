@@ -1,7 +1,8 @@
+/* eslint-disable no-unreachable */
 import React, { Fragment, useContext, useEffect } from 'react';
 import ArticuloContext from '../../context/articulos/articuloContext';
 import AuthContext from '../../context/auth/authContext';
-import { Card, CardText, CardBody,CardTitle, CardSubtitle, CardFooter } from 'reactstrap';
+import { Card, CardBody, CardFooter } from 'reactstrap';
 
 const ArticulosPerfil = () => {
     const authContext = useContext(AuthContext);
@@ -13,9 +14,19 @@ const ArticulosPerfil = () => {
     // eslint-disable-next-line
     useEffect(() => {usuarioAutenticado(), obtenerArticulosUsuario()}, []);
 
-    const fechaRefactor = (fecha) => {
+    /*const fechaRefactor = (fecha) => {
             const newFecha = new Date(fecha);
             return newFecha.toLocaleDateString()
+    }*/
+    const setColor = (tipo) => {
+        // eslint-disable-next-line default-case
+        switch(tipo){
+            case 'Triatlon': return '#DBE709'; break;
+            case 'Ruta': return '#FF6A5D'; break;
+            case 'Montaña': return '#894FDA'; break;
+            case 'Urbana': return '#F69A11'; break;
+            case 'Otra': return '#F5DBE1'; break;
+        }
     }
 
     return ( 
@@ -23,9 +34,9 @@ const ArticulosPerfil = () => {
             <div className="container articard-cont">
                 {articulos
                     ?   articulos.articulos.map( item => 
-                        <Card key={item._id} id={item._id} className="col-3 m-1 cont-card">
+                        <Card key={item._id} id={item._id} className="col-3 mx-2 cont-card">
                             <CardBody className="cont-cardbody">
-                                    <div className="cont-color">
+                                    <div className="cont-color" style={{backgroundColor: setColor(item.tipoBicicleta)}}>
                                         <div className="container cont-img"></div>
                                     </div>
                                     <div className="container cont-info">

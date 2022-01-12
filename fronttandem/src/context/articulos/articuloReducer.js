@@ -1,4 +1,4 @@
-import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, CITA_LISTA, IMGS_LISTO, OBTENER_ARTICULOS_USUARIO, REGISTRAR_ARTICULO, QUITAR_REGISTRO, ELIMINAR_ARTICULO, OBTENER_ARTICULOID } from '../../types'
+import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, CITA_LISTA, IMGS_LISTO, OBTENER_ARTICULOS_USUARIO, REGISTRAR_ARTICULO, QUITAR_REGISTRO, ELIMINAR_ARTICULO, OBTENER_ARTICULOID, BUSQUEDA_ARTICULOS } from '../../types'
 /*OBTENER_ESPECIFICO, VALIDAR_FORMULARIO, ARTICULO_ACTUAL, ELIMINAR_ARTICULO,*/
 
 // eslint-disable-next-line
@@ -109,6 +109,11 @@ export default (state, action) => {
             return{
                 ...state,
                 
+            }
+        case BUSQUEDA_ARTICULOS:
+            return{
+                ...state,
+                busqueda: action.payload
             }
         default:
             return state;

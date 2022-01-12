@@ -18,7 +18,8 @@ const ArticuloState = props => {
         fin: false,
         registrado: false,
         articulos: '',
-        articulo: ''
+        articulo: '',
+        busqueda: ''
     }
 
     const [state, dispatch] = useReducer(articuloReducer, initialState);
@@ -136,6 +137,7 @@ const ArticuloState = props => {
             registrado: state.registrado,
             articulos: state.articulos,
             articulo: state.articulo,
+            busqueda: state.busqueda,
             principioFn,
             inicioFn,
             tipoFn,

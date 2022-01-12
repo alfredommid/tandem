@@ -13,6 +13,7 @@
   --textFont:  'Prata', serif;
   --dashFont: 'Questrial', sans-serif;
 }
+
 html {
   box-sizing: border-box;
   height: 100%;
@@ -27,6 +28,7 @@ body {
     margin-bottom: 0px;
     margin-top: 0px;
   }
+  
 }
 header {
   padding-top: .7em;
@@ -443,32 +445,98 @@ main{
     display: flex;
     align-items: center;
     padding-left: 1em;
+    .saludo-usuario{
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4em;
+      font-family: var(--dashFont);
+      .nombre{
+        font-weight: bold;
+        margin-left: .2em;
+        color: black;
+      }
+    }
   }
   .routes-cont{
-    background-color: var(--blanco);
     width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    .header-icon{
-      height: 2.5em;
-      margin-left: 1.5em;
+    .search-icon{
+      height: 5em;
+      outline: none;
+      transition: ease-in 1s;
+      .header-icon{
+        height: 2em;
+        color: black;
+      }
+    }
+    .search-icon:focus{
+      outline: none;
+    }
+    .header-icon:hover{
+      stroke: var(--salmon);
+    }
+    .form-cont{
+      height: 4em;
+      width: 50%;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid black;
+      padding: 0;
+      .search-input{
+        border: none;
+        height: 3.5em;
+        width: 86%;
+        text-align: center;
+        font-family: var(--dashFont);
+        padding: 0px;
+        background-color: transparent;
+        font-size: 1.6em;
+      }
+      .search-input:focus{
+        outline: none;
+      }
+      .search-input::placeholder{
+        font-size: .8em;
+      }
+      .btn{
+        border-radius: 0px;
+      }
+      .btn:hover{
+        .header-icon{
+          stroke: var(--salmon);
+        }
+      }
+      .btn:focus{
+        outline: none !important;
+        border-color: inherit;
+        border: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .header-icon{
+        height: 1.5em;
+      }
     }
   }
   .icons-cont{
     background-color: var(--lime);
-    border-radius: 0em 0em 0em 0em;
+    border-radius: 0em 0em 0em .8em;
     width: 25%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-right: 2em;
     .route{
-      font-family: var(--textFont);
+      font-family: var(--dashFont);
       font-size: 1.4em;
       color: var(--black);
       margin-left: 1.8em;
-      transform: translateY(.4em);
+      transform: translateY(.1em);
     }
     .header-icon{
       height: 2.5em;
@@ -906,15 +974,16 @@ main{
   .articard-cont{
     display: flex;
     .cont-card{
+      font-family: var(--dashFont);
       height: 100%;
-      width: 20%;
+      width: 22%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      border-radius: 0px;
+      border-radius: .8em;
       border: 2px solid black;
+      box-shadow: .3em .6em .8em rgba(0, 0, 0, 0.2);
       .cont-cardbody{
-        cursor: pointer;
         padding: 0px;
         margin: 0;
         height: 40vh;
@@ -926,12 +995,11 @@ main{
         .cont-color{
           height: 70%;
           width: 90%;
-          background-color: #FF6A5D;
           .cont-img{
-            height: 120%;
+            height: 115%;
             width: 90%;
             background-color: #ED2754;
-            transform: translateY(-22%);
+            transform: translateY(-18%);
 
           }
         }
@@ -970,7 +1038,7 @@ main{
         }
       }
       .cont-cardfooter{
-        background-color: white;
+        background-color: transparent;
         border: none;
         width: 100%;
         height: 8vh;
