@@ -2,10 +2,13 @@ import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import frontView from './components/landpage/frontView';
 import Login from './components/auth/login';
+import LoginAfiliado from './components/auth/loginAfiliado';
 import signUp from './components/auth/signUp'
+import SignUpAff from './components/auth/signUpAff';
 import Venta from './components/Venta/venta';
 import Tienda from './components/Tienda/Tienda';
 import Perfil from './components/Perfil/perfil';
+import Dashboard from './components/Afiliados/dashboard';
 import Carrito from './components/Carrito/carrito';
 import Contacto from './components/Contacto/contacto';
 
@@ -37,10 +40,12 @@ function App() {
                   <Switch>
                     <Route exact path='/' component={frontView}/>
                     <Route exact path='/login' component={Login}/>
-                    <Route exact path='/signup' component={signUp}/>
+                    <Route exact path='/login/afiliados' component={LoginAfiliado}/>
+                    <Route exact path='/signup' component={SignUpAff}/>
                     <RutaPrivada exact path='/venta' component={Venta}/>
                     <RutaPrivada exact path='/tienda' component={Tienda}/>
                     <RutaPrivada exact path='/perfil' component={Perfil}/>
+                    <Route exact path='/afiliado/dashboard' component={Dashboard}/>
                     <RutaPrivada exact path='/carrito' component={Carrito}/>
                     <RutaPrivada exact path='/contacto' component={Contacto}/>
                   </Switch>

@@ -8,7 +8,7 @@ import logo_s from'./media/logo_s.svg';
 const SignUp = (props) => {
     //Valores del context
     //Alerta
-    const alertaContext = useContext(AlertaContext);
+    const alertaContext = useContext(AlertaContext); 
     const {alerta, mostrarAlerta} = alertaContext;
 
     //Auth

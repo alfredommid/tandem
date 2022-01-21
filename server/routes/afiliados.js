@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router();
 const afiliadoController = require('../controllers/afiliadoController');
 const {check} = require('express-validator');
+const authController = require('../controllers/authController');
 const authAfiliado = require('../middleware/authAfiliado');
 const auth = require('../middleware/auth');
 
@@ -26,6 +27,9 @@ router.post('/login', [
     check('correo', 'Agrega un correo válido').isEmail(),
     check('password', 'El password debe de ser mínimo de 6 caracteres').isLength({min:6})
 ] , afiliadoController.authAfiliado);
+
+//Info afiliado
+router.get('/login', authAfiliado, authController.afiliadoAutenticado)
 
 //Lista completa de Afiliados
 router.get('/', auth, afiliadoController.obtenerAfiliados);

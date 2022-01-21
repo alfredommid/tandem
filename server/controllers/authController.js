@@ -1,4 +1,5 @@
 const Usuario = require('../models/Usuario')
+const Afiliado = require('../models/Afiliado')
 const bcrypt = require('bcryptjs');
 const {validationResult} = require('express-validator');
 const jwt = require('jsonwebtoken')
@@ -51,6 +52,16 @@ exports.usuarioAutenticado = async(req, res) => {
     try {
         const usuario = await Usuario.findById(req.usuario.id).select('-password');
         res.status(200).json({usuario})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ msg: 'Hubo un error' });
+    }
+}
+//Obtiene el afiliado autenticado
+exports.afiliadoAutenticado = async(req, res) => {
+    try {
+        const afiliado = await Afiliado.findById(req.afiliado.id).select('-password');
+        res.status(200).json({afiliado})
     } catch (error) {
         console.log(error)
         res.status(500).json({ msg: 'Hubo un error' });
