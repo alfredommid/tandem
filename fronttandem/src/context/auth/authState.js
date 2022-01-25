@@ -1,7 +1,7 @@
 import React, {useReducer} from 'react';
 import authContext from './authContext';
 import authReducer from './authReducer';
-import {REGISTRO_EXITOSO, REGISTRO_ERROR, OBTENER_USUARIO, LOGIN_EXITOSO, AFLOGIN_EXITOSO, OBTENER_AFILIADO, LOGIN_ERROR, CERRAR_SESION} from '../../types';
+import {REGISTRO_EXITOSO, REGISTROAF_EXITOSO, REGISTRO_ERROR, OBTENER_USUARIO, LOGIN_EXITOSO, AFLOGIN_EXITOSO, OBTENER_AFILIADO, LOGIN_ERROR, CERRAR_SESION} from '../../types';
 import clienteAxios from '../../config/axios';
 import tokenAuth from '../../config/tokenAuth';
 
@@ -77,7 +77,7 @@ const AuthState = props => {
             //Obtener usuario autenticado
             usuarioAutenticado();
         } catch (error) {
-            console.log(error.response.data.msg);
+            console.log(error.response);
             const alerta = {
                 msg: error.response.data.msg,
                 categoria: 'alerta-error'
@@ -89,6 +89,29 @@ const AuthState = props => {
         }
     }
 
+    //registrar Afiliado
+    const registrarAfiliado = async datos => {
+        try {
+            const respuesta = await clienteAxios.post('/tandem/afiliados', datos);
+            console.log(respuesta.data);
+            dispatch({
+                type: REGISTROAF_EXITOSO,
+                payload: respuesta.data
+            });
+            //Obtener Usuario autenticado
+            afiliadoAutenticado();
+        } catch (error) {
+            console.log(error.response.data.msg);
+            const alerta = {
+                msg: error.response.data.msg,
+                categoria: 'alerta-error'
+            }
+            dispatch({
+                type: REGISTRO_ERROR,
+                payload: alerta
+            });
+        }
+    }
     //Login Afiliado
     const afiliadoLogin = async datos => {
         try {
@@ -152,6 +175,7 @@ const AuthState = props => {
                 cargando: state.cargando,
                 registrarUsuario,
                 iniciarSesion,
+                registrarAfiliado,
                 afiliadoLogin,
                 usuarioAutenticado,
                 afiliadoAutenticado,

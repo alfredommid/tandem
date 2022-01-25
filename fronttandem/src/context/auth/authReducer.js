@@ -1,4 +1,4 @@
-import {REGISTRO_EXITOSO, REGISTRO_ERROR, OBTENER_USUARIO, LOGIN_EXITOSO, AFLOGIN_EXITOSO, OBTENER_AFILIADO, LOGIN_ERROR, CERRAR_SESION} from '../../types';
+import {REGISTRO_EXITOSO, REGISTROAF_EXITOSO, REGISTRO_ERROR, OBTENER_USUARIO, LOGIN_EXITOSO, AFLOGIN_EXITOSO, OBTENER_AFILIADO, LOGIN_ERROR, CERRAR_SESION} from '../../types';
 
 // eslint-disable-next-line
 export default (state, action ) => {
@@ -12,6 +12,7 @@ export default (state, action ) => {
                 mensaje: null,
                 cargando: false
             }
+        case REGISTROAF_EXITOSO:
         case AFLOGIN_EXITOSO:
             localStorage.setItem('token', action.payload.token);
             return{

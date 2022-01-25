@@ -85,15 +85,10 @@ header {
 
 /*ASIDE*/
 
-main{
-  max-width: 100vw;
-  max-height: 100vh;
-}
-
 /*----------------------Landing Page---------------------------*/
 .contenedor{
   height:150vh;
-  width: 100vw;
+  max-width: 100vw;
   display: grid;
   gap: 10px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -251,6 +246,18 @@ main{
       width: 100%;
     }
   }
+  .chevron{
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .icon-chevron{
+      color: rgb(134, 130, 130);
+      height: 5em;
+      width: 5em;
+    }
+  }
   .alerta{
     grid-row: 1 / 2;
     grid-column: 9 / 11;
@@ -317,15 +324,28 @@ main{
           align-items: center;
           height: 20%;
           .input-box{
-            background-color: rgb(54, 107, 38);
-            color: white;
-            border-bottom: purple solid 3px;
+            background-color: transparent;
+            color: black;
+            border-bottom: purple solid 2px;
             margin-top: 0em;
             height: 3em;
             width: 72%;
           }
+          .input-box::placeholder{
+            color: rgb(37, 36, 36);
+          }
           .input-names{
             width: 35%;
+          }
+        }
+        .campos-aff{
+          height: 16.3%;
+          .input-box{
+            width: 82%;
+            color: black;
+          }
+          .input-names{
+            width: 40%;
           }
         }
       }
@@ -333,7 +353,7 @@ main{
         height: 30%;
         display: flex;
         justify-content: right;
-        padding-right: 7em;
+        padding-right: 5em;
         .campos-form{
           display: flex;
           flex-direction: column;
@@ -342,15 +362,14 @@ main{
           width: 100%;
           .logink{
             font-size: 1.2em;
-            text-decoration: none;
             color: #565656;
-            height: 30%;
+            height: 20%;
           }
           .submit-btn{
             background-color: #EF3025;
             color: white;
             width: 30%;
-            height: 40%;
+            height: 50%;
             font-family: var(--dashFont);
             font-size: 2em;
             margin-top: 1em;
@@ -373,6 +392,25 @@ main{
       color: white;
       font-family: var(--dashFont);
       font-size: 2em;
+    }
+    .link-off{
+      color: gray;
+      cursor: pointer;
+    }
+  }
+  .cont-user{
+    grid-row: 1 / 2;
+    grid-column: 8 / 9;
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+    .link-aff{
+      color: white;
+      font-family: var(--dashFont);
+      font-size: 2em;
+    }
+    .link-off{
+      color: gray;
       cursor: pointer;
     }
   }
@@ -498,10 +536,35 @@ main{
   height: 100vh;
   display: flex;
   flex-direction: column;
+  .header-cont{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    padding: 1em;
     .backChevron{
       height: 3rem;
       color: var(--black);
     }
+    .alerta{
+      
+      grid-row: 1 / 2;
+      grid-column: 2 / 3;
+    }
+    .aff-cont{
+      display: flex;
+      grid-row: 1 / 2;
+      grid-column: 3 / 4;
+      align-items: center;
+      text-align: right;
+      .link-aff{
+        font-size: 1.4em;
+        font-family: var(--dashFont);
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+    
     .form-container{
       margin: auto;
       margin-bottom: 1.5rem;
@@ -569,7 +632,7 @@ main{
       display: flex;
       justify-content: center;
       padding: 1rem;
-      height: 35vh;
+      height: 30vh;
     }
 
 }
@@ -1243,6 +1306,21 @@ main{
     background-color: white;
     width: 100vw;
     height: 80vh;
+  }
+}
+.alerta{
+  grid-row: 1 / 2;
+  grid-column: 9 / 11;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  .alerta-text{
+    background-color: #ED2754;
+    color: white;
+    font-size: 1.6em;
+    padding-right: .5em;
+    text-align: center;
+    padding: .5em;
   }
 }
 

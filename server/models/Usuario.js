@@ -33,6 +33,11 @@ const UsuarioSchema = mongoose.Schema({
         required: true,
         default: 'Usuario'
     },
+    ciudad:{
+        type: String,
+        required: true,
+        default: 'Querétaro'
+    },
     registro:{
         type: Date,
         default: Date.now()

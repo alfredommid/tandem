@@ -3,7 +3,6 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import frontView from './components/landpage/frontView';
 import Login from './components/auth/login';
 import LoginAfiliado from './components/auth/loginAfiliado';
-import signUp from './components/auth/signUp'
 import SignUpAff from './components/auth/signUpAff';
 import Venta from './components/Venta/venta';
 import Tienda from './components/Tienda/Tienda';

@@ -16,7 +16,6 @@ router.post('/', [
     check('correo', 'Agrega un correo válido').isEmail(),
     check('password', 'El password debe de ser mínimo de 6 caracteres').isLength({min:6}),
     check('telefono', 'El teléfono debe de ser 10 números').isLength({min:10}),
-    check('ciudad', 'La ciudad es obligatoria').not().isEmpty(),
     check('colonia', 'La colonia es obligatoria').not().isEmpty(),
     check('cp', 'El CP es obligatorio').isLength({min:5}),
     check('calleNo', 'La calle y número son obligatorios').not().isEmpty()

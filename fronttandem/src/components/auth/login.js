@@ -46,22 +46,23 @@ const Login = (props) => {
         e.preventDefault();
 
         //Validar los campos
-        if(correo.trim() === '' || password.trim() === ''){
-            mostrarAlerta('Todos los campos son obligatorios', 'alerta-error')
-        }
+        if(correo.trim() === '' || password.trim() === ''){mostrarAlerta('Todos los campos son obligatorios', 'alerta-error')}
 
         //Pararlo al action
-        iniciarSesion({correo, password});
+        if(correo.trim() !== '' && password.trim() !== ''){iniciarSesion({correo, password})};
     }
 
     //TODO Form for the auth
     
     return ( 
         <main className="log-cont">
-            <Link to="/">
-                <svg className="w-6 h-6 backChevron" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-            </Link>
-            {alerta ? ( <div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>) : null}
+            <div className="header-cont">
+                <Link to="/">
+                    <svg className="w-6 h-6 backChevron" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                </Link>
+                {alerta ? ( <div className={`alerta`}><p className="alerta-text">{alerta.msg}</p></div>) : null}
+                <div className="container aff-cont"><p className="container link-aff">Iniciar Sesión como Afiliado</p></div>
+            </div>
             <main className="form-container">
                 <h1 className="titulo">¡A rodar!</h1>
                 <form 

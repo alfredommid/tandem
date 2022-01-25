@@ -25,7 +25,7 @@ const UsuarioSchema = mongoose.Schema({
     ciudad:{
         type: String,
         required: true,
-        trim: true
+        default: 'Querétaro'
     },
     colonia:{
         type: String,

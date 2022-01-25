@@ -35,7 +35,7 @@ const UserForm = () => {
         e.preventDefault();
 
         //TODO Validar los campos
-        if(nombre.trim() === '' || apellido.trim() === '' || correo.trim() === '' || password.trim() === '' || confirmar.trim() === '' ){
+        if(nombre.trim() === '' || apellido.trim() === '' || correo.trim() === '' || password.trim() === '' || confirmar.trim() === '' || telefono.trim() === '' ){
             mostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
             return;
         }
@@ -116,12 +116,12 @@ const UserForm = () => {
                 <div className="campos-form">
                     <input 
                         type="password"
-                        lassName="input-box"
-                        d="confirmar"
-                        ame="confirmar"
-                        laceholder="Confirmar contraseña"
-                        alue={confirmar}
-                        nChange={signupChange}
+                        className="input-box"
+                        id="confirmar"
+                        name="confirmar"
+                        placeholder="Confirmar contraseña"
+                        value={confirmar}
+                        onChange={signupChange}
                     />
                 </div>
                 <div className="campos-form">
