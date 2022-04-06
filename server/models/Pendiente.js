@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ArticuloSchema = mongoose.Schema({
+const PendienteSchema = mongoose.Schema({
     articuloId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Articulo'
@@ -19,4 +19,4 @@ const ArticuloSchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Pendiente', ArticuloSchema);
+module.exports = mongoose.model('Pendiente', PendienteSchema);

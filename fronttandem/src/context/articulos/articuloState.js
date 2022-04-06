@@ -3,7 +3,7 @@ import articuloReducer from './articuloReducer';
 import articuloContext from './articuloContext';
 import tokenAuth from '../../config/tokenAuth';
 import clienteAxios from '../../config/axios';
-import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, CITA_LISTA, IMGS_LISTO, OBTENER_ARTICULOS_USUARIO, OBTENER_ARTICULOID, REGISTRAR_ARTICULO, QUITAR_REGISTRO, ELIMINAR_ARTICULO } from '../../types'
+import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, CITA_LISTA, IMGS_LISTO, OBTENER_ARTICULOS_VALORADOS, OBTENER_ARTICULOS_AFILIADO, OBTENER_ARTICULOS_USUARIO, OBTENER_ARTICULOID, INFO_ART_SELECCIONADO, REGISTRAR_ARTICULO, QUITAR_REGISTRO, ELIMINAR_ARTICULO } from '../../types'
 
 const ArticuloState = props => {
     const initialState = {
@@ -19,7 +19,9 @@ const ArticuloState = props => {
         registrado: false,
         articulos: '',
         articulo: '',
-        busqueda: ''
+        busqueda: '',
+        articulosVal:'',
+        artSelected:''
     }
 
     const [state, dispatch] = useReducer(articuloReducer, initialState);
@@ -41,6 +43,7 @@ const ArticuloState = props => {
         }
     }
 
+    const setArtData = (data) => { dispatch({type: INFO_ART_SELECCIONADO, payload: data}) };
     const principioFn = () => { dispatch ( { type: PRINCIPIO } ) }
     const inicioFn = () => { dispatch ( { type: INICIO_LISTO } ) }
     const tipoFn = () => { dispatch ( { type: TIPO_LISTO } ) }
@@ -78,7 +81,7 @@ const ArticuloState = props => {
             tokenAuth(token);
         }
         try {
-            const respuesta = await clienteAxios.get('/tandem/articulos')
+            const respuesta = await clienteAxios.get('/tandem/articulos');
             dispatch({
                 type: OBTENER_ARTICULOS_USUARIO,
                 payload: respuesta.data
@@ -122,6 +125,37 @@ const ArticuloState = props => {
         }
     }
 
+    const obtenerArticulosAfiliado = async() => {
+        const token = localStorage.getItem('token');
+        if(token){
+            // Fn enviar token por headers
+            tokenAuth(token);
+        }
+        try {
+            const respuesta = await clienteAxios.get('/tandem/afiliados/perfil')
+            dispatch({
+                type: OBTENER_ARTICULOS_AFILIADO,
+                payload: respuesta.data
+            })
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+
+    const obtenerValorados = async() => {
+        const token = localStorage.getItem('token');
+        if(token){tokenAuth(token)};
+        try {
+            const respuesta = await clienteAxios.get('/tandem/valorados');
+            dispatch({
+                type: OBTENER_ARTICULOS_VALORADOS,
+                payload: respuesta.data.valorados
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <articuloContext.Provider
         value={{
@@ -138,6 +172,8 @@ const ArticuloState = props => {
             articulos: state.articulos,
             articulo: state.articulo,
             busqueda: state.busqueda,
+            articulosVal: state.articulosVal,
+            artSelected: state.artSelected,
             principioFn,
             inicioFn,
             tipoFn,
@@ -149,7 +185,10 @@ const ArticuloState = props => {
             registrarArticulo,
             obtenerArticulosUsuario,
             obtenerArticuloId,
-            eliminarArticuloId
+            eliminarArticuloId,
+            obtenerArticulosAfiliado,
+            obtenerValorados,
+            setArtData
         }}>
             {props.children}
         </articuloContext.Provider>

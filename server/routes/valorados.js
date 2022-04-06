@@ -22,13 +22,16 @@ router.post('/:id', authAfiliado,
     check('precio', 'El campo precio es obligatorio').not().isEmpty()
 ], valoradoController.crearValorado);
 
-//Obtener todos los artículos por usuario
+//Obtener todos los artículos valorados
 router.get('/', valoradoController.obtenerValorados);
 
-//Obtener artículo en específico
-router.get('/:id', valoradoController.obtenerValoradoId);
+//Obtener artículo valorado en específico
+router.get('/articulo/:id', valoradoController.obtenerValoradoId);
 
-//Editar artículo por id
+//Obtener valorados por afiliado
+router.get('/afiliado', authAfiliado,  valoradoController.obtenerValoradosAfiliado);
+
+//Editar artículo valorado por id
 router.put('/:id', authAfiliado,
 [
     check('tipoEntrada', 'El campo tipoEntrada es obligatorio').not().isEmpty(),

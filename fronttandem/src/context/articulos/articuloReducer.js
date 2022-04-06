@@ -1,4 +1,4 @@
-import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, CITA_LISTA, IMGS_LISTO, OBTENER_ARTICULOS_USUARIO, REGISTRAR_ARTICULO, QUITAR_REGISTRO, ELIMINAR_ARTICULO, OBTENER_ARTICULOID, BUSQUEDA_ARTICULOS } from '../../types'
+import {  OBTENER_AFILIADOS, PRINCIPIO, INICIO_LISTO, TIPO_LISTO, INFO_LISTO, TALLER_LISTO, CITA_LISTA, IMGS_LISTO, OBTENER_ARTICULOS_VALORADOS, OBTENER_ARTICULOS_AFILIADO, OBTENER_ARTICULOS_USUARIO, INFO_ART_SELECCIONADO, REGISTRAR_ARTICULO, QUITAR_REGISTRO, ELIMINAR_ARTICULO, OBTENER_ARTICULOID, BUSQUEDA_ARTICULOS } from '../../types'
 /*OBTENER_ESPECIFICO, VALIDAR_FORMULARIO, ARTICULO_ACTUAL, ELIMINAR_ARTICULO,*/
 
 // eslint-disable-next-line
@@ -79,10 +79,16 @@ export default (state, action) => {
                 imgs:false,
                 fin:true
             }
+        case OBTENER_ARTICULOS_AFILIADO:
         case OBTENER_ARTICULOS_USUARIO:
             return {
                 ...state,
                 articulos: action.payload
+            }
+        case OBTENER_ARTICULOS_VALORADOS:
+            return {
+                ...state,
+                articulosVal: action.payload
             }
         case OBTENER_ARTICULOID:
             return {
@@ -114,6 +120,11 @@ export default (state, action) => {
             return{
                 ...state,
                 busqueda: action.payload
+            }
+        case INFO_ART_SELECCIONADO:
+            return{
+                ...state,
+                artSelected: action.payload
             }
         default:
             return state;

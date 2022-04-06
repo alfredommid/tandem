@@ -96,7 +96,7 @@ export default (state, action) => {
                 confEliminar:false,
                 eliminado:true
             }
-            default:
-                return state;
+        default:
+            return state;
     }
 }

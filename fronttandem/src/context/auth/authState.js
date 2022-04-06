@@ -1,7 +1,7 @@
 import React, {useReducer} from 'react';
 import authContext from './authContext';
 import authReducer from './authReducer';
-import {REGISTRO_EXITOSO, REGISTROAF_EXITOSO, REGISTRO_ERROR, OBTENER_USUARIO, LOGIN_EXITOSO, AFLOGIN_EXITOSO, OBTENER_AFILIADO, LOGIN_ERROR, CERRAR_SESION} from '../../types';
+import {REGISTRO_EXITOSO, REGISTROAF_EXITOSO, ACT_AFILIADO, REGISTRO_ERROR, OBTENER_USUARIO, OBTENER_NOMBRES_USUARIOS, LOGIN_EXITOSO, AFLOGIN_EXITOSO, OBTENER_AFILIADO, LOGIN_ERROR, CERRAR_SESION} from '../../types';
 import clienteAxios from '../../config/axios';
 import tokenAuth from '../../config/tokenAuth';
 
@@ -13,7 +13,9 @@ const AuthState = props => {
         mensaje: null,
         afauth: null,
         afiliado: null,
-        cargando: true
+        cargando: true,
+        nombresUsuarios: '',
+        afAct: false
     }
 
     const [state, dispatch] = useReducer(authReducer, initialState);
@@ -77,7 +79,6 @@ const AuthState = props => {
             //Obtener usuario autenticado
             usuarioAutenticado();
         } catch (error) {
-            console.log(error.response);
             const alerta = {
                 msg: error.response.data.msg,
                 categoria: 'alerta-error'
@@ -93,7 +94,6 @@ const AuthState = props => {
     const registrarAfiliado = async datos => {
         try {
             const respuesta = await clienteAxios.post('/tandem/afiliados', datos);
-            console.log(respuesta.data);
             dispatch({
                 type: REGISTROAF_EXITOSO,
                 payload: respuesta.data
@@ -121,7 +121,6 @@ const AuthState = props => {
                 payload: respuesta.data
             })
         } catch (error) {
-            console.log(error.response.data.msg);
             const alerta = {
                 msg: error.response.data.msg,
                 categoria: 'alerta-error'
@@ -154,6 +153,42 @@ const AuthState = props => {
         }
         
     }
+    const obtenerUsuarioId = async(arreglo) => {
+        const token = localStorage.getItem('token');
+        if(token){
+            // TODO Fn enviar token por headers
+            tokenAuth(token);
+        }
+        try {
+            let stateNames = []
+            let i = 0
+            while (i < arreglo.length ) {
+                const respuesta = await Promise.resolve(clienteAxios.get(`/tandem/usuarios/${arreglo[i].usuarioId}`));
+                const nombreFinal = `${respuesta.data.usuario.nombre} ${respuesta.data.usuario.apellido}`;
+                // eslint-disable-next-line no-loop-func
+                stateNames.push({ 'idUsuario' : arreglo[i].usuarioId, 'nombre': nombreFinal, 'idArticulo': arreglo[i]._id })
+                i++
+            }
+            dispatch({
+                type: OBTENER_NOMBRES_USUARIOS,
+                payload: stateNames
+            });
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const editarAfiliado = (id, datos) => {
+        const respuesta = clienteAxios.put(`/tandem/afiliados/${id}`, datos)
+        try {
+            dispatch({
+                type: ACT_AFILIADO,
+                payload: respuesta.data
+            });
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     //Logout
     const cerrarSesion = () => {
@@ -173,12 +208,15 @@ const AuthState = props => {
                 afauth: state.afauth,
                 afiliado: state.afiliado,
                 cargando: state.cargando,
+                nombresUsuarios: state.nombresUsuarios,
                 registrarUsuario,
                 iniciarSesion,
                 registrarAfiliado,
                 afiliadoLogin,
                 usuarioAutenticado,
                 afiliadoAutenticado,
+                obtenerUsuarioId,
+                editarAfiliado,
                 cerrarSesion
             }}
         >

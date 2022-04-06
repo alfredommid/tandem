@@ -2,19 +2,19 @@ import React, {useContext, useEffect} from 'react';
 import { Route, Redirect } from 'react-router';
 import AuthContext from '../../context/auth/authContext';
 
-const RutaPrivada = ({ component: Component, ...props }) => {
+const RutaPrivAff = ({ component: Component, ...props }) => {
     const authContext = useContext(AuthContext);
-    const { autenticado, cargando, usuarioAutenticado } = authContext;
+    const { afauth, cargando, afiliadoAutenticado } = authContext;
 
     // eslint-disable-next-line
-    useEffect(() => {usuarioAutenticado()}, []);
+    useEffect(() => {afiliadoAutenticado()}, []);
     return ( 
-        <Route { ...props } render={props => !autenticado && !cargando ? (
-            <Redirect to="/login"/>
+        <Route { ...props } render={props => !afauth && !cargando ? (
+            <Redirect to="/login/afiliado"/>
         ) : (
             <Component {...props}/>
         )}/>
      );
 }
  
-export default RutaPrivada;
+export default RutaPrivAff;

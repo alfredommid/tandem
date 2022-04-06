@@ -129,3 +129,43 @@ exports.obtenerAfiliadoId = async(req,res) => {
         res.status(500).json({msg: 'Hubo un error'});
     }
 }
+
+//Actualizar Afiliado por Id
+exports.actAfiliado = async(req,res) => {
+    try {
+        //Check the validation result // If errors
+        const errores = validationResult(req);
+        if(!errores.isEmpty()){
+            return res.status(400).json({errores: errores.array()})
+        }
+        const {nombre, correo, telefono, colonia, cp, calleNo} = req.body;
+        const afiliadoActualizado = {};
+        if(nombre){afiliadoActualizado.nombre = nombre}
+        if(correo){afiliadoActualizado.correo = correo}
+        if(telefono){afiliadoActualizado.telefono = telefono}
+        if(colonia){afiliadoActualizado.colonia = colonia}
+        if(cp){afiliadoActualizado.cp = cp}
+        if(calleNo){afiliadoActualizado.calleNo = calleNo}
+        try {
+            let afiliado = await Afiliado.findById(req.params.id);
+            console.log(afiliado.id);
+            if(!afiliado){
+                return res.status(404).json({msg : 'Afiliado no encontrado'})
+            }
+            //TODO Verificar que sea el mismo creador
+            if(afiliado.id.toString() !== req.afiliado.id){
+                return res.status(401).json({msg: 'No autorizado'})
+            }
+
+            //TODO Actualizar el artículo
+            afiliado = await Afiliado.findOneAndUpdate({_id: req.params.id}, {$set: afiliadoActualizado}, {new: true});
+            res.json({afiliado});
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({msg: 'Hubo un error en el servidor'});
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg: 'Hubo un error'});
+    }
+}

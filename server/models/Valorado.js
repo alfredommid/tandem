@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ArticuloSchema = mongoose.Schema({
+const ValoradoSchema = mongoose.Schema({
     tipoEntrada:{
         type: String,
         required: true,
@@ -104,4 +104,4 @@ const ArticuloSchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Valorado', ArticuloSchema);
+module.exports = mongoose.model('Valorado', ValoradoSchema);

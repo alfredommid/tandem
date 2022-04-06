@@ -32,7 +32,7 @@ const MainLanding = () => {
                 </video>
             </div>
             <div className="cont-action-btn">
-                <Link to="/login">
+                <Link to="/tienda">
                     <input 
                         className="action animate__animated animate__heartBeat animate__slower animate__infinite"
                         type="button"

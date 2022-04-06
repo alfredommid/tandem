@@ -11,7 +11,7 @@ import { Card, CardText, CardBody,CardTitle, CardSubtitle } from 'reactstrap';
 
 const InfoPerfil = () => {
     const authContext = useContext(AuthContext);
-    const { usuario, usuarioAutenticado } = authContext;
+    const { usuario, usuarioAutenticado} = authContext;
 
     const perfilContext = useContext(PerfilContext);
     const { dashboard, notificaciones, items, citas, msj, favs, fnArticulos, fnCitas, fnMsjs, fnFavs } = perfilContext;

@@ -1,38 +1,51 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+/* eslint-disable no-unreachable */
+import React, { useContext, useEffect} from 'react';
 import LoggedHeader from '../Venta/Layout/loggedHeader';
-import {
-    Card, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
-  } from 'reactstrap';
 import AuthContext from '../../context/auth/authContext';
 import Categorias from './Categorias';
+import ArticuloContext from '../../context/articulos/articuloContext';
+import ValCards from './valCards';
+import CarritoContext from '../../context/carrito/carritoContext';
 
 const Tienda = () => {
     const authContext = useContext(AuthContext);
-    const { usuarioAutenticado } = authContext
+    const { usuarioAutenticado} = authContext;
+
+    const articuloContext = useContext(ArticuloContext);
+    const { articulosVal, obtenerValorados } = articuloContext;
+
+    const carritoContext = useContext(CarritoContext);
+    const { catBic } = carritoContext;
 
     // eslint-disable-next-line
-    useEffect(() => {usuarioAutenticado()}, [])
+    useEffect(() => {usuarioAutenticado(), obtenerValorados()}, [])
     
-    return ( 
-        <Fragment>
+    const defCategoria = (arreglo) => {
+        // eslint-disable-next-line default-case
+        switch(catBic){
+            case 'Todas': return <ValCards data={arreglo}/>; break;
+            case 'Ruta': return <ValCards data={arreglo.filter(element => element.tipoBicicleta === 'Ruta')}/> ; break;
+            case 'Montaña': return <ValCards data={arreglo.filter(element => element.tipoBicicleta === 'Montaña')}/> ; break;
+            case 'Urbana': return <ValCards data={arreglo.filter(element => element.tipoBicicleta === 'Urbana')}/> ; break;
+            case 'Triatlon': return <ValCards data={arreglo.filter(element => element.tipoBicicleta === 'Triatlon')}/> ; break;
+            case 'Otra': return <ValCards data={arreglo.filter(element => element.tipoBicicleta === 'Otra')}/> ; break;
+        }
+    }
+
+    //<Link to={`/tienda/item._id`}></Link>
+    
+    return (
+        <main className="cont-tienda">
             <LoggedHeader/>
-            <main className="container-fluid main-tienda">
-                <div className="container categorias-tienda">
+            <div className="cont-artSelected">
+                <div className="categorias-tienda">
                     <Categorias/>
                 </div>
-                <div className="container row cont-cardstienda">
-                    <Card className="col-5">
-                        <CardBody>
-                            <CardTitle tag="h4">Card title</CardTitle>
-                            <CardSubtitle tag="h6" className="mb-2 text-muted">Card subtitle</CardSubtitle>
-                            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                            <Button color="primary" size="lg">Button</Button>
-                        </CardBody>
-                    </Card>
+                <div className="articard-cont valorados"> 
+                    {defCategoria(articulosVal)}
                 </div>
-            </main>
-        </Fragment>
+            </div>
+        </main>
      );
 }
  

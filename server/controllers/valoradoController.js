@@ -3,9 +3,8 @@ const { validationResult } = require('express-validator');
 const { model } = require('mongoose');
 
 exports.crearValorado = async(req, res) => {
-
     //Check the validation result // If errors
-    const errores = validationResult(req);
+    const errores = validationResult(req.body);
     if(!errores.isEmpty()){
         return res.status(400).json({errores: errores.array()})
     }
@@ -13,25 +12,26 @@ exports.crearValorado = async(req, res) => {
     try {
         //Crear nueva publicación
         const valorado = new Valorado({
-            tipoEntrada: req.body.tipoEntrada,
-            marca: req.body.marca,
-            year: req.body.year,
-            modelo: req.body.modelo,
-            talla: req.body.talla,
-            color: req.body.color,
-            tipoBicicleta: req.body.tipoBicicleta,
-            transmision: req.body.transmision,
-            cassette: req.body.cassette,
-            cuadro: req.body.cuadro,
-            tijera: req.body.tijera,
-            tipoLlantas: req.body.tipoLlantas,
-            marcaLlantas: req.body.marcaLlantas,
-            peso: req.body.peso,
-            observaciones: req.body.observaciones,
-            calificacion: req.body.calificacion,
-            precio: req.body.precio,
+            tipoEntrada: req.body.tipoEntradaVal,
+            marca: req.body.marcaVal,
+            year: req.body.yearVal,
+            modelo: req.body.modeloVal,
+            talla: req.body.tallaVal,
+            color: req.body.colorVal,
+            tipoBicicleta: req.body.tipoBicicletaVal,
+            transmision: req.body.transmisionVal,
+            cassette: req.body.cassetteVal,
+            cuadro: req.body.cuadroVal,
+            tijera: req.body.tijeraVal,
+            tipoLlantas: req.body.tipoLlantasVal,
+            marcaLlantas: req.body.marcaLlantasVal,
+            peso: req.body.pesoVal,
+            observaciones: req.body.observacionesVal,
+            calificacion: req.body.calificacionVal,
+            precio: req.body.precioVal,
             pendienteId: req.params.id
         });
+        console.log(valorado);
 
         //Afiliado ya viene asignado en el pending
         valorado.afiliadoId = req.afiliado.id
@@ -50,7 +50,7 @@ exports.obtenerValorados = async(req, res) => {
         res.json({ valorados });
     } catch (error) {
         console.log(error);
-        res.status(500).json({msg: 'Hubo un error'})
+        res.status(401).json({msg: 'Hubo un error'})
     }
 }
 
@@ -64,6 +64,18 @@ exports.obtenerValoradoId = async(req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({msg: 'Hubo un error'})
+    }
+}
+
+exports.obtenerValoradosAfiliado = async(req, res) => {
+    try {
+        const valoradosAf = await Valorado.find({afiliadoId : req.afiliado.id});
+        if(!valoradosAf){
+            res.json({msg: 'No tiene artículos Valorados'})
+        }
+        res.json({ valoradosAf });
+    } catch (error) {
+        res.status(401).json({msg: 'Hubo un error'});
     }
 }
 

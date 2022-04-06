@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import AlertaContext from '../../context/alertas/alertaContext';
 import AuthContext from '../../context/auth/authContext';
 import lowBanner from './media/lower_banner.svg';
+import LoginUser from './loginUser';
+import LoginAfiliado from './loginAfiliado'
 
 const Login = (props) => {
     //Alerta
@@ -11,7 +13,7 @@ const Login = (props) => {
 
     //Auth
     const authContext = useContext(AuthContext);
-    const {mensaje, autenticado, afauth, iniciarSesion} = authContext;
+    const {mensaje, autenticado, afauth} = authContext;
 
     //UseEffect para errores de log in
     useEffect(() => {
@@ -21,86 +23,45 @@ const Login = (props) => {
         // eslint-disable-next-line
     }, [mensaje, autenticado, afauth, props.history])
 
-    const [tipoCliente, setTipoCliente] = useState({
-        usuario:true,
-        afiliado:false
-    });
-
-    //Definir state para login
-    const [usuario, setUsuario] =useState({
-        correo:'',
-        password:''
-    });
-
-    const {correo, password} = usuario;
-
-    const loginChange = e => {
-        setUsuario({
-            ...usuario,
-            [e.target.name] : e.target.value
-        })
-    }
-
-    //Para iniciar sesión
-    const loginSubmit = e => {
-        e.preventDefault();
-
-        //Validar los campos
-        if(correo.trim() === '' || password.trim() === ''){mostrarAlerta('Todos los campos son obligatorios', 'alerta-error')}
-
-        //Pararlo al action
-        if(correo.trim() !== '' && password.trim() !== ''){iniciarSesion({correo, password})};
-    }
+    const [cliente, setCliente] = useState('usuario');
 
     //TODO Form for the auth
     
     return ( 
-        <main className="log-cont">
+        <main className={`log-cont ${cliente}`}>
             <div className="header-cont">
                 <Link to="/">
                     <svg className="w-6 h-6 backChevron" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                 </Link>
                 {alerta ? ( <div className={`alerta`}><p className="alerta-text">{alerta.msg}</p></div>) : null}
-                <div className="container aff-cont"><p className="container link-aff">Iniciar Sesión como Afiliado</p></div>
             </div>
             <main className="form-container">
-                <h1 className="titulo">¡A rodar!</h1>
-                <form 
-                    className="cont-login"
-                    onSubmit={loginSubmit}>
-                    <div className="login-form">
-                            <input
-                                type="email"
-                                className="loginput-box"
-                                id="correo"
-                                name="correo"
-                                placeholder="nombre@correo.com"
-                                autoComplete="off"
-                                value={correo}
-                                onChange={loginChange}
-                            />
-                    </div>
-                    <div className="login-form">
-                        <input 
-                                type="password"
-                                className="loginput-box"
-                                id="password"
-                                name="password"
-                                placeholder="Contraseña"
-                                autoComplete="off"
-                                value={password}
-                                onChange={loginChange}
-                        />
-                    </div>
-                    <div className="login-form">
-                        <input type="submit" className="login-submit" value="Iniciar Sesión"/>
-                    </div>
-                </form>
-                <Link to="/signup">
-                    <p className="loginLink">
-                        ¿No tienes cuenta?, Regístrate aquí.
-                    </p>
-                </Link>
+                {cliente === 'usuario'
+                    ?   <div className="container link-cont">
+                            <p className="container mx-2 type-cont link-on link-usuario" onClick={() => setCliente('usuario')}>Usuario</p>
+                            <p className="container mx-2 type-cont link-off link-afiliado" onClick={() => setCliente('afiliado')}>Afiliado</p>
+                        </div>
+                    :   null
+                }
+                {cliente === 'afiliado'
+                    ?   <div className="container link-cont">
+                            <p className="container mx-2 type-cont link-off link-usuario" onClick={() => setCliente('usuario')}>Usuario</p>
+                            <p className="container mx-2 type-cont link-on link-afiliado" onClick={() => setCliente('afiliado')}>Afiliado</p>
+                        </div>
+                    :   null
+                }
+                
+                <div className={`container principal-cont ${cliente}-selected`}>
+                    <h1 className="titulo">¡A rodar!</h1>
+                    {cliente === 'usuario'
+                        ?   <LoginUser/>
+                        :   null
+                    }
+                    {cliente === 'afiliado'
+                        ?   <LoginAfiliado/>
+                        :   null
+                    }
+                </div>
             </main>
             <div className="banner-container">
                 <img className="low-banner" src={lowBanner} alt="banner"/>

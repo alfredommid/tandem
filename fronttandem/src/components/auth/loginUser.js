@@ -1,41 +1,38 @@
-import React, { useState, useContext } from 'react';
+import React, {useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
-import AuthContext from '../../context/auth/authContext';
 import AlertaContext from '../../context/alertas/alertaContext';
+import AuthContext from '../../context/auth/authContext';
 
-const LoginAfiliado = () => {
-    //Alerta
+const LoginUser = () => {
     const alertaContext = useContext(AlertaContext);
     const {mostrarAlerta} = alertaContext;
 
-    //Auth
     const authContext = useContext(AuthContext);
-    const {afiliadoLogin} = authContext;
+    const {iniciarSesion} = authContext;
 
     //Definir state para login
-    const [afiliado, setAfiliado] =useState({
+    const [usuario, setUsuario] =useState({
         correo:'',
         password:''
     });
 
-    const {correo, password} = afiliado;
+    const {correo, password} = usuario;
 
     const loginChange = e => {
-        setAfiliado({
-            ...afiliado,
+        setUsuario({
+            ...usuario,
             [e.target.name] : e.target.value
         })
     }
-
-    //Para iniciar sesión
     const loginSubmit = e => {
         e.preventDefault();
 
         //Validar los campos
         if(correo.trim() === '' || password.trim() === ''){mostrarAlerta('Todos los campos son obligatorios', 'alerta-error')}
-        if(correo.trim() !== '' && password.trim() !== ''){afiliadoLogin({correo, password})};
+
+        //Pararlo al action
+        if(correo.trim() !== '' && password.trim() !== ''){iniciarSesion({correo, password})};
     }
-    
     return ( 
         <form 
             className="cont-login"
@@ -65,11 +62,11 @@ const LoginAfiliado = () => {
                 />
             </div>
             <div className="login-form">
-                <input type="submit" className="login-submit afiliado" value="Iniciar Sesión"/>
+                <input type="submit" className="login-submit usuario" value="Iniciar Sesión"/>
             </div>
             <Link to="/signup"><p className="loginLink">¿No tienes cuenta?, Regístrate aquí.</p></Link>
         </form>
      );
 }
  
-export default LoginAfiliado;
+export default LoginUser;

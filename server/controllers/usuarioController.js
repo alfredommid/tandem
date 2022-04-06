@@ -52,3 +52,17 @@ exports.crearUsuario = async (req,res) => {
         res.status(400).json({ msg : 'Hubo un error' });
     }
 }
+
+exports.obtenerUsuarioId = async(req,res) => {
+    const errores = validationResult(req);
+    if(!errores.isEmpty()){
+        return res.status(400).json({errores: errores.array()})
+    }
+    try {
+        const usuario = await Usuario.findById(req.params.id).select('-password')
+        res.json({usuario})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg: 'Hubo un error'});
+    }
+}
