@@ -20,21 +20,13 @@ const ValCards = (arreglo) => {
     // eslint-disable-next-line
     useEffect(() => {usuarioAutenticado()}, []);
 
-    const [isAdded, setIsAdded] = useState([false, false, false]);
-
     const itArray = arreglo.data;
     if(!itArray.length) { return <h1>Lo sentimos aún no hay bicicletas de esa categoría valoradas.</h1> }
 
-    const sendInfo = (id, position) => {
-        console.log(cartItems);
-        const updatedCheckedState = isAdded.map((item, index) => index === position ? !item : item );
-        setIsAdded(updatedCheckedState);
+    const sendInfo = (id ) => {
         const artSeleccionado = itArray.filter((art) => art._id === id);
-        if(!isAdded[position]){
-            agregarCart(artSeleccionado[0]);
-        } else {
-            eliminarCart(id);
-        }
+        const inCart = cartItems.filter((item) => item.id === id);
+        if(inCart.length === 0){ agregarCart(artSeleccionado[0]) } else { eliminarCart(id) }
     }
 
     const handleSelected = (data) => {
@@ -50,6 +42,34 @@ const ValCards = (arreglo) => {
             case 'Urbana': return '#F69A11'; break;
             case 'Otra': return '#F5DBE1'; break;
         }
+    }
+
+    const setCartIcon = (itemId) => {
+        const inCart = cartItems.some(item => {return item.id === itemId});
+        if(inCart){
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-shopping-cart-x" width="22" height="22" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#ff4f56" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="6" cy="19" r="2" />
+                    <circle cx="17" cy="19" r="2" />
+                    <path d="M17 17h-11v-14h-2" />
+                    <path d="M6 5l7.999 .571m5.43 4.43l-.429 2.999h-13" />
+                    <path d="M17 3l4 4" />
+                    <path d="M21 3l-4 4" />
+                </svg>
+            )
+        }else{
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-shopping-cart-plus" width="22" height="22" viewBox="0 0 24 24" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="6" cy="19" r="2" />
+                    <circle cx="17" cy="19" r="2" />
+                    <path d="M17 17h-11v-14h-2" />
+                    <path d="M6 5l6.005 .429m7.138 6.573l-.143 .998h-13" />
+                    <path d="M15 6h6m-3 -3v6" />
+                </svg>
+            )
+        };
     }
     return ( 
         itArray.map( (item, index) =>
@@ -76,30 +96,9 @@ const ValCards = (arreglo) => {
                         <p className="footer-text">${item.precio}</p>
                         {usuario
                             ?   <div className="icons-cont d-flex">
-                                {isAdded[index]
-                                    ?   <button onClick={()=>sendInfo(item._id, index)} className="btn add-cart d-flex">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-shopping-cart-x" width="22" height="22" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#ff4f56" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                <circle cx="6" cy="19" r="2" />
-                                                <circle cx="17" cy="19" r="2" />
-                                                <path d="M17 17h-11v-14h-2" />
-                                                <path d="M6 5l7.999 .571m5.43 4.43l-.429 2.999h-13" />
-                                                <path d="M17 3l4 4" />
-                                                <path d="M21 3l-4 4" />
-                                            </svg>
-                                        </button>
-                                    :   <button onClick={()=>sendInfo(item._id, index)} className="btn add-cart d-flex">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-shopping-cart-plus" width="22" height="22" viewBox="0 0 24 24" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                <circle cx="6" cy="19" r="2" />
-                                                <circle cx="17" cy="19" r="2" />
-                                                <path d="M17 17h-11v-14h-2" />
-                                                <path d="M6 5l6.005 .429m7.138 6.573l-.143 .998h-13" />
-                                                <path d="M15 6h6m-3 -3v6" />
-                                            </svg>
-                                        </button>
-                                }
-                                    
+                                    <button onClick={()=>sendInfo(item._id, index)} className="btn add-cart d-flex">
+                                        {setCartIcon(item._id)}
+                                    </button>
                                     <button onClick={()=>sendInfo(item._id)} className="btn set-fav d-flex">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-star" width="22" height="22" viewBox="0 0 24 24" strokeWidth="1.5" fill="#ff4f56" strokeLinecap="round" strokeLinejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>

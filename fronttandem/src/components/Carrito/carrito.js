@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useState, useEffect } from 'react';
+import React, {Fragment, useContext, useState, useEffect, useReducer } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardBody } from 'reactstrap';
 import CarritoContext from '../../context/carrito/carritoContext';
@@ -13,60 +13,93 @@ const Carrito = () => {
     const [resumen, setResumen] = useState({
         initialValue : 0,
         impuestos : 0,
-        envio : 0
+        envio : 0,
+        cargando:false,
     })
 
-    const {initialValue, impuestos, envio} = resumen;
+    const {initialValue, impuestos, envio, cargando} = resumen;
 
-    
+    const currencyOptions = {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    }
 
+    const getTotal = (cartArray) => {
+        const total = cartArray.reduce((totalCost, item) => totalCost + item.precioBic, 0);
+        return total.toLocaleString(undefined, currencyOptions)
+    }
+
+    const cartReducer = (state, action) => {
+        switch(action.type) {
+            case 'add':
+                return[...state, action.producto];
+            case 'delete':
+                const productIndex = state.findIndex(item => item._id === action.producto.id);
+                if(productIndex < 0){return state}
+                const update = [...state];
+                update.splice(productIndex, 1)
+                return update
+            default:
+                return state;
+        }
+    }
     const DisplayCartITems = (arreglo) => {
         /*const addTax = arreglo.forEach(item => {setResumen({...resumen, impuestos: item.precio*0.16})});*/
 
-        const addTax = (arreglo) => {
+        const addTax = (infoData) => {
             let impuestosA = 0
-            arreglo.forEach(item => impuestosA += Number(item.precio)*0.16);
-            console.log(impuestosA);
+            infoData.forEach(item => impuestosA += Number(item.precioBic)*0.02);
+            setResumen({...resumen, impuestos:impuestosA});
         }
 
-        console.log(addTax(arreglo))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        useEffect(() => {if(impuestos === 0 && cartItems.length > 0 && !cargando){ addTax(arreglo)}}, []);
+
         
-        const sumaItems = (arreglo) => { 
+        const sumaItems = (infoData) => { 
             let sumaItems = 0;
-            arreglo.forEach(item => sumaItems += Number(item.precio) )
+            infoData.forEach(item => sumaItems += Number(item.precioBic) )
             return sumaItems;
         }
-        const total = arreglo.reduce((acc, item) => acc + Number(item.precio) + impuestos + envio, initialValue);
+        const total = arreglo.reduce((acc, item) => acc + Number(item.precioBic) + impuestos + envio, initialValue);
 
         const seleccionarEnvio = () => {
-            if(envio === 0){setResumen({...resumen, envio : 250})}else{setResumen({...resumen, envio : 0})}
+            if(envio === 0){setResumen({...resumen, envio : 425})}else{setResumen({...resumen, envio : 0})}
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
         //useEffect(() => {addTax(arreglo)}, [])
 
+        const deleteUpdtade = (id) => {
+            setResumen({...resumen, cargando:true});
+            eliminarCart(id);
+            setInterval(() => {
+                setResumen({...resumen, cargando:false})
+            }, 500);
+        }
+
         return ( 
             <main className="cart-container">
                 <div className="item-sum-cont">
                     {arreglo.map( item => 
-                    <Card key={item._id} className="card-cont">
+                    <Card key={item.id} className="card-cont">
                         <CardBody className="cardBody-cont">
-                            <Link to={`/tienda/${item._id}`} className="link-cont">
+                            <Link to={`/tienda/${item.id}`} className="link-cont">
                                 <div className="img-cont"></div>
                             </Link>
                             <div className="sum-cont">
                                 <div className="cont-princ">
-                                    <p className="text text-modelo">{item.modelo}</p>
-                                    <p className="text text-marca">{item.marca}</p>
+                                    <p className="text text-modelo">{item.modeloBic}</p>
+                                    <p className="text text-marca">{item.marcaBic}</p>
                                 </div>
                                 <div className="cont-sec">
-                                    <p className="text text-year">{item.year}</p>
-                                    <p className="text text-color">{item.color}</p>
-                                    <p className="text text-precio">${item.precio}</p>
+                                    <p className="text text-year">{item.yearBic}</p>
+                                    <p className="text text-color">{item.colorBic}</p>
+                                    <p className="text text-precio">${item.precioBic}</p>
                                 </div>
                             </div>
                             <div className="delete-btn-cont">
-                                <button onClick={()=>eliminarCart(item._id)} className="btn btn-delete">
+                                <button onClick={() => deleteUpdtade(item.id)} className="btn btn-delete">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-trash" width="22" height="22" viewBox="0 0 24 24" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                         <line x1="4" y1="7" x2="20" y2="7" />
@@ -76,7 +109,6 @@ const Carrito = () => {
                                         <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                                     </svg>
                                 </button>
-                                
                             </div>
                         </CardBody>
                     </Card>)}
@@ -88,11 +120,11 @@ const Carrito = () => {
                             {envio === 0
                                 ?   <div className="opc-env-cont">
                                         <button onClick={() => seleccionarEnvio()} className="btn btn-on text text-free">Gratis</button>
-                                        <button onClick={() => seleccionarEnvio()} className="btn text text-costo">Express: $250.00</button>
+                                        <button onClick={() => seleccionarEnvio()} className="btn text text-costo">Express: $425.00</button>
                                     </div>
                                 :   <div className="opc-env-cont">
                                         <button onClick={() => seleccionarEnvio()} className="btn text text-free">Gratis</button>
-                                        <button onClick={() => seleccionarEnvio()} className="btn btn-on text text-costo">Express: $250.00</button>
+                                        <button onClick={() => seleccionarEnvio()} className="btn btn-on text text-costo">Express: $425.00</button>
                                     </div>
                             }
                         <p className="estimado-envio">Envío gratis de 5 a 10 días hábiles.</p>
@@ -138,7 +170,7 @@ const Carrito = () => {
     return ( 
         <Fragment>
             <LoggedHeader/>
-            {cartItems.length !== 0 
+            {cartItems.length > 0 
                 ?   DisplayCartITems(cartItems)
                 :   emptyCart()
             }

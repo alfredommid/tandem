@@ -18,9 +18,18 @@ const CarritoState = props => {
     const stopLoading = () => {dispatch({type: STOP_LOADING})}
 
     const agregarCart = (item) =>{
+        const {modelo, marca, year, color, precio, _id} = item;
+        const bicicleta = {
+            id: _id,
+            modeloBic: modelo,
+            marcaBic: marca,
+            yearBic: year,
+            colorBic: color,
+            precioBic: precio
+        }
         dispatch({
             type: ADD_CART,
-            payload: item
+            payload: bicicleta
         })
         setTimeout(() => {
             stopLoading();
